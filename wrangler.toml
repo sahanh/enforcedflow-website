@@ -1,5 +1,0 @@
-name = "enforcedflow-website"
-compatibility_date = "2025-10-08"
-
-[site]
-bucket = "./dist"
