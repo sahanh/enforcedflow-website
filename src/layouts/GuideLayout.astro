@@ -1,0 +1,66 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+import type { MetaData } from '~/types';
+
+export interface Props {
+  frontmatter?: {
+    title: string;
+    description: string;
+    platform?: string;
+    extension?: string;
+  };
+  title?: string;
+  description?: string;
+}
+
+const { frontmatter, title, description } = Astro.props;
+
+const pageTitle = frontmatter?.title || title;
+const pageDescription = frontmatter?.description || description;
+const platform = frontmatter?.platform;
+
+const metadata: MetaData = {
+  title: pageTitle,
+  description: pageDescription,
+};
+---
+
+<PageLayout metadata={metadata}>
+  <section class="px-4 py-16 sm:px-6 mx-auto lg:px-8 lg:py-20 max-w-6xl">
+    <!-- Header -->
+    <div class="mb-8">
+      {platform && (
+        <div class="mb-3">
+          <span class="inline-block px-3 py-1 text-sm font-semibold text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30 rounded-full capitalize">
+            {platform}
+          </span>
+        </div>
+      )}
+      <h1 class="font-bold font-heading text-4xl md:text-5xl leading-tighter tracking-tighter mb-4">
+        {pageTitle}
+      </h1>
+      <p class="text-xl text-muted dark:text-slate-400">
+        {pageDescription}
+      </p>
+    </div>
+
+    <!-- Content Grid -->
+    <div class="grid md:grid-cols-4 gap-8">
+      <!-- Sidebar (TOC) -->
+      <aside class="md:col-span-1 order-2 md:order-1">
+        <div class="sticky top-24">
+          <slot name="sidebar" />
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="md:col-span-3 order-1 md:order-2">
+        <div
+          class="prose prose-lg max-w-none dark:prose-invert dark:prose-headings:text-slate-300 prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-headings:font-bold prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-img:rounded-md prose-img:shadow-lg prose-pre:bg-slate-900 dark:prose-pre:bg-slate-950"
+        >
+          <slot />
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>

@@ -65,6 +65,34 @@ const postCollection = defineCollection({
   }),
 });
 
+// Tier 1: Core extension concepts
+const extensionsCollection = defineCollection({
+  loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/data/extensions' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    icon: z.string().optional(),
+    category: z.string().optional(),
+    draft: z.boolean().optional(),
+    metadata: metadataDefinition(),
+  }),
+});
+
+// Tier 2: Platform implementation guides
+const guidesCollection = defineCollection({
+  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: 'src/data/guides' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    platform: z.enum(['zapier', 'make', 'n8n']),
+    extension: z.string(), // Links to extension slug
+    draft: z.boolean().optional(),
+    metadata: metadataDefinition(),
+  }),
+});
+
 export const collections = {
   post: postCollection,
+  extensions: extensionsCollection,
+  guides: guidesCollection,
 };
