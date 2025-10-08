@@ -103,15 +103,9 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
       const name = formData.get('name') as string;
       const email = formData.get('email') as string;
       const userMessage = formData.get('message') as string;
-      const disclaimer = formData.get('disclaimer');
 
-      if (!disclaimer) {
-        showMessage('Please accept the disclaimer to continue.', 'error');
-        return;
-      }
-
-      // Merge name and email into the message
-      const fullMessage = `Name: ${name}\nEmail: ${email}\n\n${userMessage}`;
+      // Include name in the message
+      const fullMessage = `Name: ${name}\n\n${userMessage}`;
 
       const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
       const originalButtonText = submitButton?.textContent || 'Contact us';
@@ -126,10 +120,12 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Accept': 'application/json',
           },
           body: JSON.stringify({
             subject: 'New contact form submission',
             message: fullMessage,
+            email: email,
           }),
         });
 
