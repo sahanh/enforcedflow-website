@@ -48,6 +48,14 @@ export const headerData = {
       text: 'Blog',
       href: getBlogPermalink(),
     },
+    {
+      text: 'About',
+      href: getPermalink('/about'),
+    },
+    {
+      text: 'Contact',
+      href: getPermalink('/contact'),
+    },
   ],
   actions: [{ text: 'Get Started', href: getPermalink('/#extensions') }],
 };
@@ -82,7 +90,7 @@ export const footerData = {
       title: 'Company',
       links: [
         { text: 'About', href: getPermalink('/about') },
-        { text: 'Contact', href: '#' },
+        { text: 'Contact', href: getPermalink('/contact') },
       ],
     },
   ],

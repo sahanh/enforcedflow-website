@@ -5,7 +5,9 @@ import Button from '~/components/ui/Button.astro';
 const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } = Astro.props;
 ---
 
-<form>
+<form id="contact-form">
+  <div id="form-message" class="mb-4 p-3 rounded-lg hidden"></div>
+
   {
     inputs &&
       inputs.map(
@@ -23,6 +25,7 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
                 id={name}
                 autocomplete={autocomplete}
                 placeholder={placeholder}
+                required
                 class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
               />
             </div>
@@ -41,6 +44,7 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
           name={textarea.name ? textarea.name : 'message'}
           rows={textarea.rows ? textarea.rows : 4}
           placeholder={textarea.placeholder}
+          required
           class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
         />
       </div>
@@ -55,6 +59,7 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
             id="disclaimer"
             name="disclaimer"
             type="checkbox"
+            required
             class="cursor-pointer mt-1 py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
           />
         </div>
@@ -85,3 +90,81 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
     )
   }
 </form>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const messageDiv = document.getElementById('form-message') as HTMLDivElement;
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const name = formData.get('name') as string;
+      const email = formData.get('email') as string;
+      const userMessage = formData.get('message') as string;
+      const disclaimer = formData.get('disclaimer');
+
+      if (!disclaimer) {
+        showMessage('Please accept the disclaimer to continue.', 'error');
+        return;
+      }
+
+      // Merge name and email into the message
+      const fullMessage = `Name: ${name}\nEmail: ${email}\n\n${userMessage}`;
+
+      const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      const originalButtonText = submitButton?.textContent || 'Contact us';
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sending...';
+      }
+
+      try {
+        const response = await fetch('https://app.enforcedflow.com/api/support-request', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            subject: 'New contact form submission',
+            message: fullMessage,
+          }),
+        });
+
+        if (response.ok) {
+          showMessage('Thank you! Your message has been sent successfully. We\'ll get back to you soon.', 'success');
+          form.reset();
+        } else {
+          showMessage('Something went wrong. Please try again later.', 'error');
+        }
+      } catch (error) {
+        showMessage('Failed to send message. Please check your connection and try again.', 'error');
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = originalButtonText;
+        }
+      }
+    });
+  }
+
+  function showMessage(message: string, type: 'success' | 'error') {
+    if (messageDiv) {
+      messageDiv.textContent = message;
+      messageDiv.className = `mb-4 p-3 rounded-lg ${
+        type === 'success'
+          ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+          : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+      }`;
+      messageDiv.classList.remove('hidden');
+
+      if (type === 'success') {
+        setTimeout(() => {
+          messageDiv.classList.add('hidden');
+        }, 5000);
+      }
+    }
+  }
+</script>
