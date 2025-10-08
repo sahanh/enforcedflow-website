@@ -279,3 +279,10 @@ export interface Content extends Omit<Headline, 'classes'>, Widget {
 }
 
 export interface Contact extends Omit<Headline, 'classes'>, Form, Widget {}
+
+export interface MultiColumn {
+  ratio?: 'equal' | 'left-wide' | 'right-wide';
+  gap?: 'sm' | 'md' | 'lg' | 'xl';
+  breakpoint?: 'sm' | 'md' | 'lg';
+  class?: string;
+}

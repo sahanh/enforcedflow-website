@@ -1,0 +1,117 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+export interface Props extends HTMLAttributes<'div'> {
+  /**
+   * Column ratio - determines the width split between columns
+   * - 'equal': 50/50 split (default)
+   * - 'left-wide': 60/40 split (left column wider)
+   * - 'right-wide': 40/60 split (right column wider)
+   */
+  ratio?: 'equal' | 'left-wide' | 'right-wide';
+
+  /**
+   * Gap size between columns
+   * - 'sm': small gap (1rem)
+   * - 'md': medium gap (2rem) - default
+   * - 'lg': large gap (3rem)
+   * - 'xl': extra large gap (4rem)
+   */
+  gap?: 'sm' | 'md' | 'lg' | 'xl';
+
+  /**
+   * Breakpoint at which columns stack vertically
+   * - 'sm': 640px
+   * - 'md': 768px (default)
+   * - 'lg': 1024px
+   */
+  breakpoint?: 'sm' | 'md' | 'lg';
+
+  /**
+   * Additional CSS classes
+   */
+  class?: string;
+}
+
+const {
+  ratio = 'equal',
+  gap = 'md',
+  breakpoint = 'md',
+  class: className,
+  ...rest
+} = Astro.props;
+
+// Map ratio to grid column classes
+const ratioClasses = {
+  'equal': 'grid-cols-1 md:grid-cols-2',
+  'left-wide': 'grid-cols-1 md:grid-cols-5',
+  'right-wide': 'grid-cols-1 md:grid-cols-5',
+};
+
+// Map gap to spacing classes
+const gapClasses = {
+  'sm': 'gap-4',
+  'md': 'gap-8',
+  'lg': 'gap-12',
+  'xl': 'gap-16',
+};
+
+// Map breakpoint to responsive prefix
+const breakpointMap = {
+  'sm': 'sm',
+  'md': 'md',
+  'lg': 'lg',
+};
+
+// Get the appropriate grid class based on ratio and breakpoint
+const getGridClass = () => {
+  const bp = breakpointMap[breakpoint];
+  if (ratio === 'equal') {
+    return `grid-cols-1 ${bp}:grid-cols-2`;
+  } else if (ratio === 'left-wide') {
+    return `grid-cols-1 ${bp}:grid-cols-5`;
+  } else {
+    return `grid-cols-1 ${bp}:grid-cols-5`;
+  }
+};
+
+// Get column span classes for asymmetric layouts
+const getColumnSpans = () => {
+  if (ratio === 'left-wide') {
+    return {
+      left: `${breakpointMap[breakpoint]}:col-span-3`,
+      right: `${breakpointMap[breakpoint]}:col-span-2`,
+    };
+  } else if (ratio === 'right-wide') {
+    return {
+      left: `${breakpointMap[breakpoint]}:col-span-2`,
+      right: `${breakpointMap[breakpoint]}:col-span-3`,
+    };
+  }
+  return { left: '', right: '' };
+};
+
+const columnSpans = getColumnSpans();
+---
+
+<div
+  class:list={[
+    'grid',
+    getGridClass(),
+    gapClasses[gap],
+    className
+  ]}
+  {...rest}
+>
+  <div class:list={['two-column-left', columnSpans.left]}>
+    <slot name="left">
+      <slot name="column-1" />
+    </slot>
+  </div>
+
+  <div class:list={['two-column-right', columnSpans.right]}>
+    <slot name="right">
+      <slot name="column-2" />
+    </slot>
+  </div>
+</div>

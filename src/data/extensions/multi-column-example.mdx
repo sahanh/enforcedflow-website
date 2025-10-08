@@ -1,0 +1,128 @@
+---
+title: "Multi Column Layout Example"
+description: "A demonstration of the MultiColumn component for organizing content"
+icon: "📐"
+draft: true
+---
+
+import MultiColumn from '~/components/ui/MultiColumn.astro';
+
+## Multi Column Layout Demo
+
+This page demonstrates the MultiColumn component for organizing rich text content in multiple columns.
+
+### Equal Columns (50/50)
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    ### Left Column Content
+
+    This is the left column. It contains rich text that can include:
+
+    - **Bold text**
+    - *Italic text*
+    - Lists
+    - Links
+    - And more markdown features
+
+    The columns will stack vertically on mobile devices for better readability.
+  </div>
+
+  <div slot="right">
+    ### Right Column Content
+
+    This is the right column. It can contain different types of content:
+
+    1. Numbered lists
+    2. Code snippets
+    3. Images
+    4. Any markdown content
+
+    Both columns are equal width on desktop screens.
+  </div>
+</MultiColumn>
+
+### Left-Wide Layout (60/40)
+
+<MultiColumn ratio="left-wide" gap="lg">
+  <div slot="left">
+    ### Main Content Area
+
+    The left column is wider (60%) which is perfect for:
+
+    - Main article content
+    - Detailed explanations
+    - Long-form text
+    - Primary information
+
+    This layout works great when you have a main content area with supplementary information on the side.
+  </div>
+
+  <div slot="right">
+    ### Sidebar Info
+
+    The right column is narrower (40%):
+
+    - Quick tips
+    - Side notes
+    - Related links
+    - Callouts
+  </div>
+</MultiColumn>
+
+### Right-Wide Layout (40/60)
+
+<MultiColumn ratio="right-wide" gap="sm">
+  <div slot="left">
+    ### Supporting Content
+
+    The left column is narrower in this layout:
+
+    - Images
+    - Icons
+    - Quick facts
+    - Stats
+  </div>
+
+  <div slot="right">
+    ### Primary Content
+
+    The right column gets more space (60%):
+
+    - Detailed descriptions
+    - Main content
+    - Longer explanations
+    - Primary focus area
+
+    This is useful when you want to emphasize the right side content.
+  </div>
+</MultiColumn>
+
+### Use Cases
+
+The MultiColumn component is perfect for:
+
+**Documentation Layout**
+- Code examples on one side, explanations on the other
+- Before/after comparisons
+- Feature lists with descriptions
+
+**Marketing Content**
+- Benefits and features side-by-side
+- Testimonials with supporting text
+- Product comparisons
+
+**Technical Guides**
+- Step-by-step instructions with screenshots
+- Configuration options with descriptions
+- API documentation with examples
+
+### Configuration Options
+
+The component supports several props:
+
+- **ratio**: `'equal'` | `'left-wide'` | `'right-wide'` (default: `'equal'`)
+- **gap**: `'sm'` | `'md'` | `'lg'` | `'xl'` (default: `'md'`)
+- **breakpoint**: `'sm'` | `'md'` | `'lg'` (default: `'md'`)
+
+All columns automatically stack vertically on mobile for optimal reading experience.
