@@ -1,30 +1,30 @@
 site:
-  name: AstroWind
-  site: 'https://astrowind.vercel.app'
+  name: EnforcedFlow
+  site: 'https://enforcedflow.com'
   base: '/'
   trailingSlash: false
 
-  googleSiteVerificationId: orcPxI47GSa-cRvY11tUe6iGg2IO_RPvnA1q95iEM3M
+  googleSiteVerificationId: null # Add your verification ID here
 
 # Default SEO metadata
 metadata:
   title:
-    default: AstroWind
-    template: '%s — AstroWind'
-  description: "\U0001F680 Suitable for Startups, Small Business, Sass Websites, Professional Portfolios, Marketing Websites, Landing Pages & Blogs."
+    default: EnforcedFlow - Smart Workflow Extensions
+    template: '%s | EnforcedFlow'
+  description: "Enhance your Zapier automations with smart extensions. Add Human-in-the-Loop approval workflows, intelligent round-robin task distribution, and more."
   robots:
     index: true
     follow: true
   openGraph:
-    site_name: AstroWind
+    site_name: EnforcedFlow
     images:
       - url: '~/assets/images/default.png'
         width: 1200
         height: 628
     type: website
   twitter:
-    handle: '@arthelokyo'
-    site: '@arthelokyo'
+    handle: '@enforcedflow'
+    site: '@enforcedflow'
     cardType: summary_large_image
 
 i18n:
