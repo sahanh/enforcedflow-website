@@ -1,16 +1,21 @@
 ---
 import { SITE } from 'astrowind:config';
+import { Image } from 'astro:assets';
+import logoLight from '../assets/images/logo-light.png';
+import logoDark from '../assets/images/logo-dark.png';
 ---
 
 <div class="flex items-center">
-  <img
-    src="/logo-light.png"
+  <Image
+    src={logoLight}
     alt={SITE?.name}
     class="h-8 w-auto dark:hidden"
+    loading="eager"
   />
-  <img
-    src="/logo-dark.png"
+  <Image
+    src={logoDark}
     alt={SITE?.name}
     class="h-8 w-auto hidden dark:block"
+    loading="eager"
   />
 </div>
