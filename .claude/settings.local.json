@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:enforcedflow.com)"
+      "WebFetch(domain:enforcedflow.com)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
