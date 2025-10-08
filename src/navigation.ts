@@ -81,7 +81,7 @@ export const footerData = {
     {
       title: 'Company',
       links: [
-        { text: 'About', href: '#' },
+        { text: 'About', href: getPermalink('/about') },
         { text: 'Contact', href: '#' },
       ],
     },
@@ -95,6 +95,6 @@ export const footerData = {
     { ariaLabel: 'Github', icon: 'tabler:brand-github', href: '#' },
   ],
   footNote: `
-    <a class="text-blue-600 underline dark:text-muted" href="https://enforcedflow.com">EnforcedFlow</a> · All rights reserved.
+    <a class="text-blue-600 underline dark:text-muted" href="https://enforcedflow.com">EnforcedFlow</a> · All rights reserved. · Proudly made in 🇳🇿
   `,
 };
