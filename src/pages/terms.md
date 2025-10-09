@@ -32,6 +32,7 @@ EnforcedFlow provides reliable text transformation tools designed for integratio
 ## 5. Acceptable Use
 
 Users agree not to:
+
 - Use Service for illegal activities
 - Disrupt or overload the Service
 - Resell or redistribute Service without permission
@@ -48,5 +49,5 @@ Terms governed by New Zealand law
 
 ## 8. Contact
 
-**Email:** [email protected]
+**Email:** contact[at]enforcedflow.com
 **Address:** 1 Soljak Place, Auckland, New Zealand
