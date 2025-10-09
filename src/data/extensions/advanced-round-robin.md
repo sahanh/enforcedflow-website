@@ -96,6 +96,6 @@ The extension maintains state across assignments, ensuring fair distribution whi
 
 Ready to implement intelligent task distribution?
 
-- **[Set up in Zapier →](/guides/zapier/round-robin)** - Complete implementation guide
+- **[Set up in Zapier →](/extensions/advanced-round-robin/guides/zapier/setup)** - Complete implementation guide
 - **[View API Docs →](#)** - For custom integrations
 - **[See Examples →](#)** - Real-world use cases

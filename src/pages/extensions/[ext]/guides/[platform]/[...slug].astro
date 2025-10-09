@@ -1,0 +1,77 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import GuideLayout from '~/layouts/GuideLayout.astro';
+
+export const getStaticPaths = (async () => {
+  const extensionGuides = await getCollection('extensionGuides');
+
+  return extensionGuides.map((guide) => {
+    // Extract extension, platform, and slug from the guide ID
+    // Example: "advanced-round-robin/guides/zapier/setup"
+    // -> ext: "advanced-round-robin", platform: "zapier", slug: "setup"
+    const parts = guide.id.split('/');
+    const ext = parts[0];
+    const platform = parts[2]; // Skip "guides"
+    const slug = parts.slice(3).join('/');
+
+    return {
+      params: { ext, platform, slug },
+      props: { guide },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { guide } = Astro.props;
+const { Content } = await render(guide);
+---
+
+<GuideLayout
+  title={guide.data.title}
+  description={guide.data.description}
+>
+  <Fragment slot="frontmatter">
+    <div class="frontmatter-info">
+      <span>Platform: {guide.data.platform}</span>
+    </div>
+  </Fragment>
+
+  <Content />
+
+  <div slot="sidebar">
+    <div class="sticky top-24 space-y-6">
+      <!-- Quick Links -->
+      <div class="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-6">
+        <h3 class="font-bold text-lg mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li>
+            <a href={`/extensions/${guide.data.extension}`} class="text-blue-600 dark:text-blue-400 hover:underline">
+              → Extension Overview
+            </a>
+          </li>
+          <li>
+            <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">
+              → API Documentation
+            </a>
+          </li>
+          <li>
+            <a href="/" class="text-blue-600 dark:text-blue-400 hover:underline">
+              → All Extensions
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Help Section -->
+      <div class="bg-slate-50 dark:bg-slate-800 rounded-lg p-6">
+        <h3 class="font-bold text-lg mb-2">Need Help?</h3>
+        <p class="text-sm text-muted dark:text-slate-400 mb-4">
+          Stuck or have questions? We're here to help.
+        </p>
+        <a href="#" class="text-sm text-blue-600 dark:text-blue-400 hover:underline">
+          Contact Support →
+        </a>
+      </div>
+    </div>
+  </div>
+</GuideLayout>

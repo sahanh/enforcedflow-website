@@ -91,8 +91,22 @@ const guidesCollection = defineCollection({
   }),
 });
 
+// Extension-specific guides (Version A structure: extensions/{ext}/guides/{platform}/)
+const extensionGuidesCollection = defineCollection({
+  loader: glob({ pattern: ['**/guides/**/*.md', '**/guides/**/*.mdx'], base: 'src/data/extensions' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    platform: z.enum(['zapier', 'make', 'n8n']),
+    extension: z.string(), // Links to extension slug
+    draft: z.boolean().optional(),
+    metadata: metadataDefinition(),
+  }),
+});
+
 export const collections = {
   post: postCollection,
   extensions: extensionsCollection,
   guides: guidesCollection,
+  extensionGuides: extensionGuidesCollection,
 };
