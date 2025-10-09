@@ -1,7 +1,7 @@
 ---
-title: "Advanced Round Robin Assignment"
-description: "Distribute tasks intelligently across your team with skill-based, time-based, and priority-based routing"
-icon: "⚙️"
+title: 'Advanced Round Robin Assignment'
+description: 'Distribute tasks intelligently across your team with skill-based, time-based, and priority-based routing'
+icon: '⚙️'
 ---
 
 ## What is Advanced Round Robin?
@@ -13,6 +13,7 @@ Unlike basic round robin, this extension allows you to create sophisticated rout
 ## When to Use Advanced Round Robin
 
 ✅ **Use when:**
+
 - Team members have different skill sets or specializations
 - Workload needs to be distributed based on capacity (not just equally)
 - Team availability varies by time or day
@@ -20,6 +21,7 @@ Unlike basic round robin, this extension allows you to create sophisticated rout
 - You want to prevent burnout by balancing workload
 
 ❌ **Don't use when:**
+
 - You just need simple sequential assignment (use [Simple Round Robin](/extensions/simple-round-robin) instead)
 - Tasks require manual review for assignment
 - Your team size is 1-2 people
@@ -28,27 +30,35 @@ Unlike basic round robin, this extension allows you to create sophisticated rout
 ## Key Features
 
 ### Skill-Based Routing
+
 Match tasks to team members based on their skills or expertise:
+
 - Assign technical support tickets to engineers
 - Route sales leads to reps based on industry knowledge
 - Direct language-specific inquiries to appropriate staff
 
 ### Time-Based Availability
+
 Respect working hours and schedules:
+
 - Route only during team member's working hours
 - Support multiple time zones
 - Handle holiday and vacation schedules
 - Fallback to available team members when needed
 
 ### Weighted Distribution
+
 Distribute based on capacity, not just equally:
+
 - Senior team members handle 50% of load
 - New hires get 20% while ramping up
 - Part-time staff receive proportional assignments
 - Dynamic adjustment as team changes
 
 ### Priority-Based Assignment
+
 Route urgent items differently:
+
 - High-priority tickets go to senior staff
 - VIP customers assigned to dedicated reps
 - Escalations routed to specific team members
@@ -56,16 +66,19 @@ Route urgent items differently:
 ## Common Use Cases
 
 **Customer Support**
+
 - Distribute tickets based on agent skills (billing, technical, sales)
 - Route only during agent working hours
 - Balance workload across team
 
 **Sales Lead Distribution**
+
 - Assign leads based on territory or industry
 - Weight distribution by rep capacity
 - Route high-value leads to senior reps
 
 **Task Assignment**
+
 - Match tasks to team member expertise
 - Distribute based on current workload
 - Respect availability and time zones
@@ -86,8 +99,3 @@ Ready to implement intelligent task distribution?
 - **[Set up in Zapier →](/guides/zapier/round-robin)** - Complete implementation guide
 - **[View API Docs →](#)** - For custom integrations
 - **[See Examples →](#)** - Real-world use cases
-
-## Related Extensions
-
-- **[Simple Round Robin](/extensions/simple-round-robin)** - For basic sequential assignment
-- **[Human-in-the-Loop](/extensions/human-in-the-loop)** - Add review steps to automation

@@ -10,8 +10,8 @@ export const headerData = {
       text: 'Extensions',
       links: [
         {
-          text: 'Round Robin (Advanced)',
-          href: getPermalink('/extensions/round-robin'),
+          text: 'Advanced Round Robin',
+          href: getPermalink('/extensions/advanced-round-robin'),
         },
         {
           text: 'Simple Round Robin',
