@@ -8,8 +8,9 @@ The `MultiColumn` component provides a flexible way to organize rich text conten
 
 ## Features
 
+- **2 or 3 Column Layouts**: Support for both 2-column and 3-column layouts
 - **Responsive Design**: Automatically stacks columns vertically on mobile devices
-- **Flexible Ratios**: Support for equal (50/50), left-wide (60/40), and right-wide (40/60) layouts
+- **Flexible Ratios**: Support for equal (50/50), left-wide (60/40), and right-wide (40/60) layouts for 2 columns
 - **Customizable Spacing**: Four gap sizes (sm, md, lg, xl)
 - **Configurable Breakpoints**: Choose when columns should stack (sm, md, lg)
 - **Dark Mode Compatible**: Works seamlessly with the site's dark mode
@@ -19,7 +20,8 @@ The `MultiColumn` component provides a flexible way to organize rich text conten
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `ratio` | `'equal'` \| `'left-wide'` \| `'right-wide'` | `'equal'` | Column width distribution |
+| `columns` | `2` \| `3` | `2` | Number of columns to display |
+| `ratio` | `'equal'` \| `'left-wide'` \| `'right-wide'` | `'equal'` | Column width distribution (2 columns only) |
 | `gap` | `'sm'` \| `'md'` \| `'lg'` \| `'xl'` | `'md'` | Spacing between columns |
 | `breakpoint` | `'sm'` \| `'md'` \| `'lg'` | `'md'` | Responsive breakpoint for stacking |
 | `class` | `string` | `undefined` | Additional CSS classes |
@@ -173,6 +175,40 @@ Useful when emphasizing right-side content:
 </MultiColumn>
 ```
 
+### Three Column Layout
+
+Equal width columns for presenting multiple related items:
+
+```mdx
+<MultiColumn columns={3} gap="md">
+  <div slot="left">
+    ### Column 1
+
+    Content for the first column.
+    - Point 1
+    - Point 2
+  </div>
+
+  <div slot="center">
+    ### Column 2
+
+    Content for the second column.
+    - Point 1
+    - Point 2
+  </div>
+
+  <div slot="right">
+    ### Column 3
+
+    Content for the third column.
+    - Point 1
+    - Point 2
+  </div>
+</MultiColumn>
+```
+
+**Note**: Three column layouts always use equal widths. The `ratio` prop is ignored when `columns={3}`.
+
 ## Common Use Cases
 
 ### Documentation Layout
@@ -246,10 +282,12 @@ Useful when emphasizing right-side content:
 
 The component automatically handles responsive layouts:
 
-- **Desktop** (above breakpoint): Two columns side-by-side
+- **Desktop** (above breakpoint): Columns side-by-side (2 or 3 columns)
 - **Mobile** (below breakpoint): Stacked vertically
 
-The left column always appears first on mobile, followed by the right column.
+For 2-column layouts, the left column appears first on mobile, followed by the right column.
+
+For 3-column layouts, columns stack in order: left, center, then right.
 
 ## Accessibility
 

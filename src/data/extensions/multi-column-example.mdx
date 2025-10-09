@@ -98,6 +98,43 @@ This page demonstrates the MultiColumn component for organizing rich text conten
   </div>
 </MultiColumn>
 
+### Three Column Layout
+
+<MultiColumn columns={3} gap="md">
+  <div slot="left">
+    ### Feature Set A
+
+    Perfect for organizing related items:
+
+    - Authentication
+    - Authorization
+    - User Management
+    - Session Handling
+  </div>
+
+  <div slot="center">
+    ### Feature Set B
+
+    Middle column with equal width:
+
+    - API Integration
+    - Webhooks
+    - Real-time Events
+    - Data Sync
+  </div>
+
+  <div slot="right">
+    ### Feature Set C
+
+    Third column for additional content:
+
+    - Analytics
+    - Reporting
+    - Export Tools
+    - Dashboard
+  </div>
+</MultiColumn>
+
 ### Use Cases
 
 The MultiColumn component is perfect for:
@@ -121,8 +158,9 @@ The MultiColumn component is perfect for:
 
 The component supports several props:
 
-- **ratio**: `'equal'` | `'left-wide'` | `'right-wide'` (default: `'equal'`)
-- **gap**: `'sm'` | `'md'` | `'lg'` | `'xl'` (default: `'md'`)
-- **breakpoint**: `'sm'` | `'md'` | `'lg'` (default: `'md'`)
+- **columns**: `2` | `3` (default: `2`) - Number of columns to display
+- **ratio**: `'equal'` | `'left-wide'` | `'right-wide'` (default: `'equal'`) - Only applies to 2-column layouts
+- **gap**: `'sm'` | `'md'` | `'lg'` | `'xl'` (default: `'md'`) - Spacing between columns
+- **breakpoint**: `'sm'` | `'md'` | `'lg'` (default: `'md'`) - When columns should stack
 
 All columns automatically stack vertically on mobile for optimal reading experience.

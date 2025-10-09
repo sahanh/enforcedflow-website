@@ -3,10 +3,17 @@ import type { HTMLAttributes } from 'astro/types';
 
 export interface Props extends HTMLAttributes<'div'> {
   /**
+   * Number of columns
+   * - 2: Two column layout (default)
+   * - 3: Three column layout
+   */
+  columns?: 2 | 3;
+
+  /**
    * Column ratio - determines the width split between columns
-   * - 'equal': 50/50 split (default)
-   * - 'left-wide': 60/40 split (left column wider)
-   * - 'right-wide': 40/60 split (right column wider)
+   * - 'equal': 50/50 split for 2 columns, 33/33/33 for 3 columns (default)
+   * - 'left-wide': 60/40 split (2 columns only)
+   * - 'right-wide': 40/60 split (2 columns only)
    */
   ratio?: 'equal' | 'left-wide' | 'right-wide';
 
@@ -34,19 +41,13 @@ export interface Props extends HTMLAttributes<'div'> {
 }
 
 const {
+  columns = 2,
   ratio = 'equal',
   gap = 'md',
   breakpoint = 'md',
   class: className,
   ...rest
 } = Astro.props;
-
-// Map ratio to grid column classes
-const ratioClasses = {
-  'equal': 'grid-cols-1 md:grid-cols-2',
-  'left-wide': 'grid-cols-1 md:grid-cols-5',
-  'right-wide': 'grid-cols-1 md:grid-cols-5',
-};
 
 // Map gap to spacing classes
 const gapClasses = {
@@ -63,9 +64,16 @@ const breakpointMap = {
   'lg': 'lg',
 };
 
-// Get the appropriate grid class based on ratio and breakpoint
+// Get the appropriate grid class based on columns, ratio and breakpoint
 const getGridClass = () => {
   const bp = breakpointMap[breakpoint];
+
+  if (columns === 3) {
+    // 3 column layout - always equal width
+    return `grid-cols-1 ${bp}:grid-cols-3`;
+  }
+
+  // 2 column layouts
   if (ratio === 'equal') {
     return `grid-cols-1 ${bp}:grid-cols-2`;
   } else if (ratio === 'left-wide') {
@@ -75,8 +83,12 @@ const getGridClass = () => {
   }
 };
 
-// Get column span classes for asymmetric layouts
+// Get column span classes for asymmetric layouts (2 columns only)
 const getColumnSpans = () => {
+  if (columns === 3) {
+    return { left: '', center: '', right: '' };
+  }
+
   if (ratio === 'left-wide') {
     return {
       left: `${breakpointMap[breakpoint]}:col-span-3`,
@@ -103,15 +115,23 @@ const columnSpans = getColumnSpans();
   ]}
   {...rest}
 >
-  <div class:list={['two-column-left', columnSpans.left]}>
+  <div class:list={['multi-column-left', columnSpans.left]}>
     <slot name="left">
       <slot name="column-1" />
     </slot>
   </div>
 
-  <div class:list={['two-column-right', columnSpans.right]}>
+  {columns === 3 && (
+    <div class:list={['multi-column-center', columnSpans.center]}>
+      <slot name="center">
+        <slot name="column-2" />
+      </slot>
+    </div>
+  )}
+
+  <div class:list={['multi-column-right', columnSpans.right]}>
     <slot name="right">
-      <slot name="column-2" />
+      {columns === 3 ? <slot name="column-3" /> : <slot name="column-2" />}
     </slot>
   </div>
 </div>
