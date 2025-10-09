@@ -6,31 +6,80 @@ import ExtensionLayout from '~/layouts/ExtensionLayout.astro';
 export const getStaticPaths = (async () => {
   const extensions = await getCollection('extensions');
 
-  return extensions.map((extension) => ({
-    params: { slug: extension.id },
-    props: { extension },
-  }));
+  return extensions.map((extension) => {
+    // Handle both flat files (simple-round-robin) and nested folders (advanced-round-robin/index)
+    const slug = extension.id.replace('/index', '');
+
+    return {
+      params: { slug },
+      props: { extension },
+    };
+  });
 }) satisfies GetStaticPaths;
 
 const { extension } = Astro.props;
 const { Content } = await render(extension);
+
+// Get the extension slug (without /index)
+const extensionSlug = extension.id.replace('/index', '');
+
+// Check if this extension has any guides
+const allExtensionGuides = await getCollection('extensionGuides');
+const extensionGuides = allExtensionGuides.filter((guide) => {
+  // Extract extension ID from guide path (e.g., "advanced-round-robin/guides/zapier/setup")
+  const extId = guide.id.split('/')[0];
+  return extId === extensionSlug;
+});
+
+// Group guides by platform
+const guidesByPlatform = extensionGuides.reduce(
+  (acc, guide) => {
+    const platform = guide.data.platform;
+    if (!acc[platform]) {
+      acc[platform] = [];
+    }
+    acc[platform].push(guide);
+    return acc;
+  },
+  {} as Record<string, typeof extensionGuides>
+);
 ---
 
-<ExtensionLayout
-  title={extension.data.title}
-  description={extension.data.description}
->
+<ExtensionLayout title={extension.data.title} description={extension.data.description}>
   <Content />
 
   <div slot="sidebar">
-    <div class="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-6">
+    {
+      extensionGuides.length > 0 && (
+        <div class="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-6 mb-6">
+          <h3 class="font-bold text-lg mb-4">Setup Guides</h3>
+          <ul class="space-y-2">
+            {Object.entries(guidesByPlatform).map(([platform, guides]) => {
+              // Get the first guide for this platform (or you could list all)
+              const guide = guides[0];
+              const platformName = platform.charAt(0).toUpperCase() + platform.slice(1);
+              // Extract the path after the extension name
+              const guidePath = guide.id.replace(`${extensionSlug}/`, '');
+
+              return (
+                <li>
+                  <a
+                    href={`/extensions/${extensionSlug}/${guidePath}`}
+                    class="text-blue-600 dark:text-blue-400 hover:underline"
+                  >
+                    → {platformName} Setup Guide
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )
+    }
+
+    <!-- <div class="bg-slate-50 dark:bg-slate-800 rounded-lg p-6">
       <h3 class="font-bold text-lg mb-4">Quick Links</h3>
       <ul class="space-y-2">
-        <li>
-          <a href={`/extensions/${extension.id}/guides/zapier/setup`} class="text-blue-600 dark:text-blue-400 hover:underline">
-            → Zapier Setup Guide
-          </a>
-        </li>
         <li>
           <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">
             → API Documentation
@@ -42,6 +91,6 @@ const { Content } = await render(extension);
           </a>
         </li>
       </ul>
-    </div>
+    </div> -->
   </div>
 </ExtensionLayout>

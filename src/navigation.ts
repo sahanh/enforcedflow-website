@@ -24,27 +24,6 @@ export const headerData = {
       ],
     },
     {
-      text: 'Guides',
-      links: [
-        {
-          text: 'Zapier Guides',
-          href: '#',
-        },
-        {
-          text: 'Round Robin in Zapier',
-          href: getPermalink('/guides/zapier/round-robin'),
-        },
-        {
-          text: 'Simple Round Robin in Zapier',
-          href: getPermalink('/guides/zapier/simple-round-robin'),
-        },
-        {
-          text: 'Human-in-the-Loop in Zapier',
-          href: getPermalink('/guides/zapier/human-in-the-loop'),
-        },
-      ],
-    },
-    {
       text: 'Blog',
       href: getBlogPermalink(),
     },
@@ -65,7 +44,7 @@ export const footerData = {
     {
       title: 'Extensions',
       links: [
-        { text: 'Round Robin (Advanced)', href: getPermalink('/extensions/round-robin') },
+        { text: 'Advanced Round Robin', href: getPermalink('/extensions/advanced-round-robin') },
         { text: 'Simple Round Robin', href: getPermalink('/extensions/simple-round-robin') },
         { text: 'Human-in-the-Loop', href: getPermalink('/extensions/human-in-the-loop') },
       ],
@@ -73,7 +52,10 @@ export const footerData = {
     {
       title: 'Guides',
       links: [
-        { text: 'Round Robin in Zapier', href: getPermalink('/guides/zapier/round-robin') },
+        {
+          text: 'Advanced Round Robin in Zapier',
+          href: getPermalink('/extensions/advanced-round-robin/guides/zapier/setup'),
+        },
         { text: 'Simple Round Robin in Zapier', href: getPermalink('/guides/zapier/simple-round-robin') },
         { text: 'Human-in-the-Loop in Zapier', href: getPermalink('/guides/zapier/human-in-the-loop') },
       ],

@@ -66,8 +66,9 @@ const postCollection = defineCollection({
 });
 
 // Tier 1: Core extension concepts
+// Supports both flat files (simple-round-robin.md) and nested folders (advanced-round-robin/index.md)
 const extensionsCollection = defineCollection({
-  loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/data/extensions' }),
+  loader: glob({ pattern: ['*.md', '*.mdx', '*/index.md', '*/index.mdx'], base: 'src/data/extensions' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
