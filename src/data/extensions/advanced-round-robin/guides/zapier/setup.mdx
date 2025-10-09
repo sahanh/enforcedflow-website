@@ -1,0 +1,137 @@
+---
+title: "Advanced Round Robin in Zapier"
+description: "Set up skill-based, time-based, and priority-based task distribution in your Zapier workflows"
+platform: "zapier"
+extension: "advanced-round-robin"
+---
+
+import MultiColumn from '~/components/ui/MultiColumn.astro';
+
+# Skill Based, Time Based and Priority Based Round Robin for Zapier
+
+The Advanced Round Robin extension allows you to set up complex lead routing among a group of agents based on:
+
+1. Set of skills
+2. Availability (day and time)
+3. Weight/Priority
+
+## Prerequisite
+
+Before begin, [sign up](https://app.enforcedflow.com/register) for a free EnforcedFlow account.
+
+## Setup a Round Robin Group in EnforcedFlow
+
+### Create a New Group
+
+![](~/assets/images/extensions/advanced-round-robin/01-create-group.png)
+
+Provide a name for the group
+
+![](~/assets/images/extensions/advanced-round-robin/02-agent-fields.png)
+
+### Setup Agent Fields
+
+Before setting up agents, you need to decide what kind of information to store.
+
+In this example, we'll be contacting the agent via email. To store the agent's email, let's create a field called **email**.
+
+*   If you want to send the agent a Slack message, create a field called "slack_user_id."
+*   If you are doing call routing, create a field called "phonenumber."
+
+The usage of these fields will be covered later in the article.
+
+Once done, the settings tab should look like below
+
+![](~/assets/images/extensions/advanced-round-robin/05-add-agents.png)
+
+### Set Up Fields for Routing
+
+Fields allow you to set the criteria for routing. There are three types of fields:
+
+*   Multi Select – Used when you want to route a request based on skills, language, or category.
+*   Day and Time – Used when you want to route a request based on an agent's availability. You can set the agent's working hours and days.
+*   Weight – Used to prioritise requests, e.g., assign 70% of tickets to Agent A.
+
+EnforcedFlow supports multiple fields so you can set up powerful routing criteria.
+
+_Note: A group can only have one Day and Time field and one Weight field._
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    ![](~/assets/images/extensions/advanced-round-robin/03-routing-fields.png)
+  </div>
+
+  <div slot="right">
+    ![](~/assets/images/extensions/advanced-round-robin/04-field-setup.png)
+  </div>
+</MultiColumn>
+
+###### Adding a Multi Select Field
+
+![](~/assets/images/extensions/advanced-round-robin/07-testing.png)
+
+1.  Set the Field Type to Multi-Select
+2.  Set a label
+3.  Add options (one by one)
+4.  Click Save
+
+###### Day and Time, Weight
+
+These fields don't require additional configuration when added to a group.
+
+###### Configured Fields
+
+Once done, the Fields tab should look like below.
+
+![](~/assets/images/extensions/advanced-round-robin/08-zapier-setup.png)
+
+### Add Agents
+
+The final step is to add agents to the group.
+
+![](~/assets/images/extensions/advanced-round-robin/09-zapier-action.png)
+
+When adding agents, you will be presented with the fields we configured, both the agent information fields and the routing fields.
+
+![](~/assets/images/extensions/advanced-round-robin/10-agent-form-1.png)
+
+![](~/assets/images/extensions/advanced-round-robin/11-agent-form-2.png)
+
+![](~/assets/images/extensions/advanced-round-robin/12-agent-form-3.png)
+
+Once agents are set up, it should look like this:
+
+![](~/assets/images/extensions/advanced-round-robin/13-agents-list.png)
+
+Congratulations! You've successfully setup a round robin group.
+
+### Final Step – Testing
+
+To make sure routing is configured correctly, use the **Testing** tab. You can test based on various criteria.
+
+_Note: The Day and Time field will always use the current time._
+
+![](~/assets/images/extensions/advanced-round-robin/14-testing-tab.png)
+
+## Use it in Zapier
+
+In Zapier, look for the **EnforcedFlow App** when setting up an action.
+
+1.  Select **Get Next Agent (Advanced Round Robin)** as the Event.
+2.  In the configuration step, select the newly created group from the dropdown.
+
+Note: Only **multi-select** fields will be available in Zapier to provide data. The **Day and Time** and **Weight** fields are handled automatically.
+
+![](~/assets/images/extensions/advanced-round-robin/15-zapier-enforcedflow.png)
+
+![](~/assets/images/extensions/advanced-round-robin/16-zapier-config.png)
+
+###### Step in Action
+
+If you set the skills to **"tech"** and test the step, you will see the routing in action. You can then use the agent information from the output.
+
+![](~/assets/images/extensions/advanced-round-robin/17-zapier-test.png)
+
+![](~/assets/images/extensions/advanced-round-robin/18-zapier-output.png)
+
+![](~/assets/images/extensions/advanced-round-robin/19-zapier-demo.gif)
