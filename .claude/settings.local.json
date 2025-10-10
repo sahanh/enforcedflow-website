@@ -4,7 +4,8 @@
       "WebFetch(domain:enforcedflow.com)",
       "Bash(git commit:*)",
       "Bash(npm run dev:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Read(//private/tmp/**)"
     ],
     "deny": [],
     "ask": []
