@@ -14,6 +14,7 @@ import type { AstroIntegration } from 'astro';
 import astrowind from './vendor/integration';
 
 import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin, lazyImagesRehypePlugin } from './src/utils/frontmatter';
+import { REDIRECTS } from './src/utils/redirects';
 
 import cloudflare from '@astrojs/cloudflare';
 
@@ -25,6 +26,9 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 
 export default defineConfig({
   output: 'static',
+
+  // URL Redirects - Astro will generate appropriate redirects for the Cloudflare adapter
+  redirects: REDIRECTS,
 
   integrations: [
     tailwind({
