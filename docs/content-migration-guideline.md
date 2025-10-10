@@ -38,9 +38,13 @@ Extract the complete HTML content from the source web page.
 
 ### Step 2: Identify Multi-Column Layouts
 
-Analyze the HTML structure to detect multi-column layouts.
+Analyze the HTML structure to detect multi-column layouts. Content sources may use different column systems.
 
-**Detection Pattern:**
+**Important:** The detection is **structure-based**, not content-based. Don't try to identify columns by inspecting what's inside them (images, text, lists, etc.). The HTML structure tells you everything you need to know.
+
+---
+
+#### Option A: WordPress Gutenberg Columns
 
 Look for the parent container:
 ```html
@@ -56,11 +60,49 @@ Count the direct children:
 </div>
 ```
 
-**Rule:** Number of `wp-block-column` children = Number of columns
+**Detection Rule:** Number of `wp-block-column` children = Number of columns
 - 2 children = 2-column layout
 - 3 children = 3-column layout
 
-**Important:** The detection is **structure-based**, not content-based. Don't try to identify columns by inspecting what's inside them (images, text, lists, etc.). The `wp-block-columns` structure tells you everything you need to know.
+---
+
+#### Option B: Kadence Columns
+
+Look for the parent container:
+```html
+<div class="kb-row-layout-wrap kb-row-layout-id... wp-block-kadence-rowlayout">
+```
+
+Look for the column wrapper with column count class:
+```html
+<div class="kt-row-column-wrap kt-has-2-columns ...">
+```
+
+Individual columns:
+```html
+  <div class="wp-block-kadence-column kadence-column...">
+    <div class="kt-inside-inner-col">
+      [CONTENT]
+    </div>
+  </div>
+  <div class="wp-block-kadence-column kadence-column...">
+    <div class="kt-inside-inner-col">
+      [CONTENT]
+    </div>
+  </div>
+  <!-- Optional 3rd column -->
+</div>
+```
+
+**Detection Rule:** Look for `kt-has-X-columns` class on the wrapper
+- `kt-has-2-columns` = 2-column layout
+- `kt-has-3-columns` = 3-column layout
+
+**Kadence Structure Notes:**
+- Kadence uses nested wrappers: `kb-row-layout-wrap` → `kt-row-column-wrap` → `wp-block-kadence-column` → `kt-inside-inner-col`
+- The column count is explicitly stated in the `kt-has-X-columns` class
+- Each column's content is inside `kt-inside-inner-col`
+- Images may use `wp-block-kadence-image` with `<figcaption>` elements
 
 ---
 
@@ -200,6 +242,10 @@ Replace image HTML with Markdown syntax:
 
 Convert HTML column structures to MultiColumn components.
 
+---
+
+#### Converting WordPress Gutenberg Columns
+
 **2-Column Layout:**
 
 HTML:
@@ -267,11 +313,99 @@ MDX:
 </MultiColumn>
 ```
 
+---
+
+#### Converting Kadence Columns
+
+**2-Column Layout (List + Image):**
+
+HTML:
+```html
+<div class="kb-row-layout-wrap wp-block-kadence-rowlayout">
+  <div class="kt-row-column-wrap kt-has-2-columns">
+    <div class="wp-block-kadence-column">
+      <div class="kt-inside-inner-col">
+        <ol>
+          <li>The trigger listens to new google form submissions.</li>
+          <li>Information from the form is then sent to OpenAI.</li>
+          <li>Create a new task for a human to review.</li>
+          <li>Link is emailed to the reviewer.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="wp-block-kadence-column">
+      <div class="kt-inside-inner-col">
+        <figure class="wp-block-kadence-image">
+          <img src="workflow-screenshot.png" alt="" />
+          <figcaption>Workflow to create new tasks for a human to review</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+MDX:
+```mdx
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    1. The trigger listens to new google form submissions.
+    2. Information from the form is then sent to OpenAI.
+    3. Create a new task for a human to review.
+    4. Link is emailed to the reviewer.
+  </div>
+
+  <div slot="right">
+    ![Workflow to create new tasks for a human to review](~/assets/images/extensions/{extension-name}/workflow-screenshot.png)
+  </div>
+</MultiColumn>
+```
+
+**2-Column Layout (Text + Image with Caption):**
+
+HTML:
+```html
+<div class="kb-row-layout-wrap wp-block-kadence-rowlayout">
+  <div class="kt-row-column-wrap kt-has-2-columns">
+    <div class="wp-block-kadence-column">
+      <div class="kt-inside-inner-col">
+        <p>The output from the new human in the loop task is a url. A human can visit this url in a browser to review the content.</p>
+      </div>
+    </div>
+    <div class="wp-block-kadence-column">
+      <div class="kt-inside-inner-col">
+        <figure class="wp-block-kadence-image">
+          <img src="task-output.png" alt="" />
+          <figcaption>The output after a task has been created</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+MDX:
+```mdx
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    The output from the new human in the loop task is a url. A human can visit this url in a browser to review the content.
+  </div>
+
+  <div slot="right">
+    ![The output after a task has been created](~/assets/images/extensions/{extension-name}/task-output.png)
+  </div>
+</MultiColumn>
+```
+
+---
+
 **Key Points:**
-- Extract content from each `wp-block-column` as-is
+- Extract content from within `kt-inside-inner-col` for Kadence
+- Extract content from `wp-block-column` for WordPress Gutenberg
 - Preserve markdown formatting within slots
 - Use appropriate slot names: `left`, `center`, `right`
 - Keep consistent gap sizing (usually `md`)
+- Convert `<figcaption>` to markdown alt text: `![caption text](path)`
 
 ---
 
@@ -686,7 +820,9 @@ No additional configuration needed.
 Use this checklist for each migration:
 
 - [ ] Extract complete HTML from source page
-- [ ] Identify all `wp-block-columns` structures
+- [ ] Identify all multi-column structures:
+  - [ ] WordPress Gutenberg: `wp-block-columns` structures
+  - [ ] Kadence: `kb-row-layout-wrap` structures
 - [ ] List all image URLs
 - [ ] Create image directory: `src/assets/images/extensions/{name}/`
 - [ ] Download images with sequential naming
@@ -696,6 +832,7 @@ Use this checklist for each migration:
 - [ ] Migrate text content verbatim
 - [ ] Convert column structures to MultiColumn components
 - [ ] Replace image placeholders with markdown syntax
+- [ ] Convert `<figcaption>` elements to markdown alt text
 - [ ] Apply image sizing/centering where needed
 - [ ] Test on desktop and mobile viewports
 - [ ] Verify all images load correctly
