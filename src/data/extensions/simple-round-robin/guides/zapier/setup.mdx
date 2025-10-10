@@ -1,0 +1,59 @@
+---
+title: "Simple Round Robin in Zapier"
+description: "Set up basic sequential task distribution in your Zapier workflows"
+platform: "zapier"
+extension: "simple-round-robin"
+---
+
+import MultiColumn from '~/components/ui/MultiColumn.astro';
+
+# Simple Round Robin for Zapier
+
+Ever needed to distribute leads or tasks evenly across your team in Zapier? Traditional round robin setups often involve complex configurations with storage steps, lookup tables, or Google Sheets management.
+
+## The Old Way vs The New Way
+
+Traditionally, setting up round robin in Zapier required:
+
+- Creating storage values for counters
+- Setting up lookup tables or Google Sheets
+- Managing MOD functions and formulas
+- Writing Javascript for reset logic
+- Maintaining multiple Zap steps
+
+With the EnforcedFlow Round Robin action, it's as simple as:
+
+- Add the Round Robin action to your Zap (1)
+- Enter your team members as key-value pairs, give the group a name (2)
+- That's it! The action will round robin and return the next option each time
+- Bonus: You can use the same group with same option in other Zaps!
+
+## Set Up Round Robin in Zapier: 3 Simple Steps
+
+<MultiColumn columns={3} gap="md">
+  <div slot="left">
+
+### Pick Round Robin
+
+![](~/assets/images/extensions/simple-round-robin/01-round-robin-selected.png)
+
+  </div>
+
+  <div slot="center">
+
+### Set a Group and Options
+
+Enter your team members as key-value pairs, give the group a name
+
+![](~/assets/images/extensions/simple-round-robin/02-round-robin-configuration.png)
+
+  </div>
+
+  <div slot="right">
+
+### Use the Output
+
+![](~/assets/images/extensions/simple-round-robin/03-round-robin-output.png)
+
+  </div>
+</MultiColumn>
