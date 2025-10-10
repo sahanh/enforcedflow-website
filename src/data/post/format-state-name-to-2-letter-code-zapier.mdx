@@ -1,0 +1,114 @@
+---
+publishDate: 2024-10-08T00:00:00Z
+title: How to Format Full State Name to 2-Letter Code in Zapier
+excerpt: Learn two methods to convert state names to 2-letter codes in Zapier - using lookup tables or AI. Compare approaches and choose what works best for your workflow.
+image: https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80
+category: How-To
+tags:
+  - zapier
+  - formatting
+  - automation
+  - workflows
+metadata:
+  canonical: https://enforcedflow.com/blog/format-state-name-to-2-letter-code-zapier
+---
+
+import MultiColumn from '~/components/ui/MultiColumn.astro';
+
+## Option 1: Look Up Table with Zapier Formatter, Zapier Tables or Google Sheet
+
+If the formatting is strictly for a given country (eg: US). It makes sense to keep the values in a place like Google Sheet, Zapier Table and look up.
+
+##### How to setup Formatter by Zapier to format US states to 2 code
+
+1. Create a step and use "Formatter by Zapier"
+2. For the Action event, select "Utilities"
+3. In Configure tab, under Transform, pick Lookup Table
+4. For the Lookup Key, pick the dynamic value from previous step, for the example below I've put New York.
+5. Under look up table, add all the states and 2 code format.
+
+**Limitations with using Formatter for state code formatting**
+
+1. Works for a single country as it would be hard to maintain formatting for multiple countries.
+2. Requires an initial setup, you can leverage a Zapier table if multiple automations are relying on this formatting.
+3. If the input has any misspellings the look up will fail.
+
+<MultiColumn columns={3} gap="md">
+  <div slot="left">
+    ![Formatter in available actions](~/assets/images/post/state-code-formatting/01-formatter-actions.png)
+  </div>
+
+  <div slot="center">
+    ![Setup options for Formatter by Zapier](~/assets/images/post/state-code-formatting/02-formatter-utility.png)
+  </div>
+
+  <div slot="right">
+    ![Configuring Lookup table in Formatter](~/assets/images/post/state-code-formatting/03-formatter-lookup-table.png)
+  </div>
+</MultiColumn>
+
+##### How to setup Zapier Table to format US states to 2 code
+
+The approach is similar to lookup table in Formatter, instead of maintaining the data within the Formatter step we are creating a separate table leveraging Zapeir tables which then can we be used by any automation. It's a database.
+
+Steps:
+
+1. Navigate to Tables from Zapier dashboard
+2. Create a new table
+3. Either import data from a spreadsheet (csv, google sheet etc) or start blank
+4. If you are starting from blank, add the data manually
+
+###### Setting up the table
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    ![Navigating to Tables from Zapier dashboard](~/assets/images/post/state-code-formatting/04-zapier-table-link.png)
+  </div>
+
+  <div slot="right">
+    ![Creating a new table by importing or starting from blank](~/assets/images/post/state-code-formatting/05-zapier-table-import.png)
+  </div>
+</MultiColumn>
+
+![Adding records manually](~/assets/images/post/state-code-formatting/06-zapier-table-data.png)
+
+###### Using the table in an automation
+
+<MultiColumn ratio="left-wide" gap="md">
+  <div slot="left">
+    ![Zapier Table setup step](~/assets/images/post/state-code-formatting/07-zapier-table-action.png)
+  </div>
+
+  <div slot="right">
+    ![Zapier Table configure step](~/assets/images/post/state-code-formatting/08-zapier-table-config.png)
+  </div>
+</MultiColumn>
+
+**In Setup**
+
+1. For the action pick Zapier Tables
+2. Make sure App is set to Zapier Tables
+3. Select "Find Record" note that for the state look up we only need one record on look up, Find Record returns one record at a time
+
+**In Configure**
+
+1. Table ID – Select the table created earlier
+2. Filter count – Set to 1
+3. Look Up field – The field containing the full state name
+4. Lookup value – <mark style="background-color:#ffd900">This should be from the trigger or previous action step, for the demo I have hardcoded it to New York</mark>
+
+**Limitations with using Zapier Table for state code formatting**
+
+1. Works for a single country as it would be hard to maintain formatting for multiple countries.
+2. Requires an initial setup.
+3. If the input has any misspellings the look up will fail.
+
+## Option 2: Using AI (ChatGPT, OpenAI, Zapier AI)
+
+Using any of the AI powered Actions, a prompt could take the input and format.
+
+**Limitations when using AI based actions**
+
+AI may sometimes not adhere to the prompt instructions. I expect the all major AI providers to have accurate information of US states, if the use case is to format US states, this method is fastest to implement.
+
+![Using AI by Zapier with a prompt to format the US state code](~/assets/images/post/state-code-formatting/09-ai-prompt.png)
