@@ -1,13 +1,11 @@
 ---
-title: "Advanced Round Robin in Zapier"
-description: "Set up skill-based, time-based, and priority-based task distribution in your Zapier workflows"
-platform: "zapier"
-extension: "advanced-round-robin"
+title: 'Skill Based, Time Based and Priority Based Round Robin for Zapier'
+description: 'Set up skill-based, time-based, and priority-based task distribution in your Zapier workflows'
+platform: 'zapier'
+extension: 'advanced-round-robin'
 ---
 
 import MultiColumn from '~/components/ui/MultiColumn.astro';
-
-# Skill Based, Time Based and Priority Based Round Robin for Zapier
 
 The Advanced Round Robin extension allows you to set up complex lead routing among a group of agents based on:
 
@@ -41,8 +39,8 @@ Before setting up agents, you need to decide what kind of information to store.
 
 In this example, we'll be contacting the agent via email. To store the agent's email, let's create a field called **email**.
 
-*   If you want to send the agent a Slack message, create a field called "slack_user_id."
-*   If you are doing call routing, create a field called "phonenumber."
+- If you want to send the agent a Slack message, create a field called "slack_user_id."
+- If you are doing call routing, create a field called "phonenumber."
 
 The usage of these fields will be covered later in the article.
 
@@ -54,9 +52,9 @@ Once done, the settings tab should look like below
 
 Fields allow you to set the criteria for routing. There are three types of fields:
 
-*   Multi Select – Used when you want to route a request based on skills, language, or category.
-*   Day and Time – Used when you want to route a request based on an agent's availability. You can set the agent's working hours and days.
-*   Weight – Used to prioritise requests, e.g., assign 70% of tickets to Agent A.
+- Multi Select – Used when you want to route a request based on skills, language, or category.
+- Day and Time – Used when you want to route a request based on an agent's availability. You can set the agent's working hours and days.
+- Weight – Used to prioritise requests, e.g., assign 70% of tickets to Agent A.
 
 EnforcedFlow supports multiple fields so you can set up powerful routing criteria.
 
@@ -110,9 +108,7 @@ When adding agents, you will be presented with the fields we configured, both th
     ![](~/assets/images/extensions/advanced-round-robin/10-agent-form-1.png)
   </div>
 
-  <div slot="center">
-    ![](~/assets/images/extensions/advanced-round-robin/11-agent-form-2.png)
-  </div>
+<div slot="center">![](~/assets/images/extensions/advanced-round-robin/11-agent-form-2.png)</div>
 
   <div slot="right">
     ![](~/assets/images/extensions/advanced-round-robin/12-agent-form-3.png)
@@ -161,9 +157,7 @@ If you set the skills to **"tech"** and test the step, you will see the routing 
     ![](~/assets/images/extensions/advanced-round-robin/17-zapier-test.png)
   </div>
 
-  <div slot="center">
-    ![](~/assets/images/extensions/advanced-round-robin/18-zapier-output.png)
-  </div>
+<div slot="center">![](~/assets/images/extensions/advanced-round-robin/18-zapier-output.png)</div>
 
   <div slot="right">
     ![](~/assets/images/extensions/advanced-round-robin/19-zapier-demo.gif)
