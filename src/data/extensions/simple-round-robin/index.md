@@ -93,7 +93,7 @@ The extension tracks position in the rotation automatically, so you never have t
 
 Ready to distribute tasks fairly across your team?
 
-- **[Set up in Zapier →](/guides/zapier/simple-round-robin)** - Step-by-step guide
+- **[Set up in Zapier →](/extensions/simple-round-robin/guides/zapier/setup)** - Step-by-step guide
 - **[View API Docs →](#)** - For custom integrations
 - **[See Examples →](#)** - Real-world workflows
 
