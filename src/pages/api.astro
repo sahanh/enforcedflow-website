@@ -1,0 +1,24 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+
+const metadata = {
+  title: 'API',
+  description: 'EnforcedFlow API documentation and reference - Coming Soon',
+};
+---
+
+<Layout metadata={metadata}>
+  <HeroText tagline="API" title="Coming Soon" />
+
+  <section class="px-4 py-16 sm:px-6 mx-auto lg:px-8 lg:py-20 max-w-4xl">
+    <div class="text-center">
+      <p class="text-xl text-muted dark:text-slate-400 mb-8">
+        We're working on comprehensive API documentation and developer resources.
+      </p>
+      <p class="text-lg text-muted dark:text-slate-400">
+        Stay tuned for updates on programmatic access to EnforcedFlow extensions.
+      </p>
+    </div>
+  </section>
+</Layout>
