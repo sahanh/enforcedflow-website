@@ -26,6 +26,7 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 
 export default defineConfig({
   output: 'static',
+  site: 'https://enforcedflow.com',
 
   // URL Redirects - Astro will generate appropriate redirects for the Cloudflare adapter
   redirects: REDIRECTS,
