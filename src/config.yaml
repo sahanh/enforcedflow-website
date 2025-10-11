@@ -11,7 +11,7 @@ metadata:
   title:
     default: EnforcedFlow - Smart Workflow Extensions
     template: '%s | EnforcedFlow'
-  description: "Enhance your Zapier automations with smart extensions. Add Human-in-the-Loop approval workflows, intelligent round-robin task distribution, and more."
+  description: 'Enhance your Zapier automations with smart extensions. Add Human-in-the-Loop approval workflows, intelligent round-robin task distribution, and more.'
   robots:
     index: true
     follow: true
@@ -66,7 +66,7 @@ apps:
 analytics:
   vendors:
     googleAnalytics:
-      id: null # or "G-XXXXXXXXXX"
+      id: 'G-XKLBD9PMHC'
 
 ui:
   theme: 'system' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"
