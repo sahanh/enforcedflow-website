@@ -2,6 +2,8 @@
 import Layout from '~/layouts/PageLayout.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import ExtensionCard from '~/components/widgets/ExtensionCard.astro';
+import { Image } from 'astro:assets';
+import testimonialImage from '~/assets/images/cornelia-testimonial.jpg';
 
 const metadata = {
   title: 'EnforcedFlow - Enhance Your Zapier Automations with Smart Extensions',
@@ -66,6 +68,50 @@ const metadata = {
         icon=""
         extensionSlug="human-in-the-loop"
       />
+    </div>
+  </section>
+
+  <!-- Testimonial Section -->
+  <section class="relative isolate overflow-hidden bg-white px-6 py-10 sm:py-10 lg:px-8 dark:bg-gray-900">
+    <div class="max-w-4xl mx-auto">
+      <figure>
+        <blockquote class="text-center text-xl/8 font-semibold text-gray-900 sm:text-2xl/9 dark:text-white">
+          <p>
+            "EnforcedFlow has eliminated the complexity of Zapier setup, making the process seamless. The tool
+            integrates smoothly with my Google Business Profile review management, reducing response times considerably.
+            The support team is highly responsive and offers valuable consultation whenever challenges arise."
+          </p>
+        </blockquote>
+        <figcaption class="mt-10">
+          <Image
+            src={testimonialImage}
+            alt="Cornelia Aigenberger"
+            class="mx-auto size-10 rounded-full"
+            width={40}
+            height={40}
+          />
+          <div class="mt-4 flex items-center justify-center space-x-3 text-base">
+            <div class="font-semibold text-gray-900 dark:text-white">Cornelia Aigenberger</div>
+            <svg
+              viewBox="0 0 2 2"
+              width="3"
+              height="3"
+              aria-hidden="true"
+              class="fill-gray-900 dark:fill-white"
+            >
+              <circle r="1" cx="1" cy="1"></circle>
+            </svg>
+            <a
+              href="https://aigenberger.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-gray-600 transition-colors hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
+            >
+              aigenberger.com
+            </a>
+          </div>
+        </figcaption>
+      </figure>
     </div>
   </section>
 </Layout>
