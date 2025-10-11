@@ -1,0 +1,113 @@
+import MultiColumn from '~/components/ui/MultiColumn.astro';
+
+## Setup a Round Robin Group in EnforcedFlow
+
+### Create a New Group
+
+![](~/assets/images/extensions/advanced-round-robin/01-create-group.png)
+
+Provide a name for the group
+
+<div style="display: flex; justify-content: center; width: 100%;">
+  <div style="width: 70%;">
+
+![](~/assets/images/extensions/advanced-round-robin/02-agent-fields.png)
+
+  </div>
+</div>
+
+### Setup Agent Fields
+
+Before setting up agents, you need to decide what kind of information to store.
+
+In this example, we'll be contacting the agent via email. To store the agent's email, let's create a field called **email**.
+
+- If you want to send the agent a Slack message, create a field called "slack_user_id."
+- If you are doing call routing, create a field called "phonenumber."
+
+The usage of these fields will be covered later in the article.
+
+Once done, the settings tab should look like below
+
+![](~/assets/images/extensions/advanced-round-robin/05-add-agents.png)
+
+### Set Up Fields for Routing
+
+Fields allow you to set the criteria for routing. There are three types of fields:
+
+- Multi Select – Used when you want to route a request based on skills, language, or category.
+- Day and Time – Used when you want to route a request based on an agent's availability. You can set the agent's working hours and days.
+- Weight – Used to prioritise requests, e.g., assign 70% of tickets to Agent A.
+
+EnforcedFlow supports multiple fields so you can set up powerful routing criteria.
+
+_Note: A group can only have one Day and Time field and one Weight field._
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    ![](~/assets/images/extensions/advanced-round-robin/03-routing-fields.png)
+  </div>
+
+  <div slot="right">
+    ![](~/assets/images/extensions/advanced-round-robin/04-field-setup.png)
+  </div>
+</MultiColumn>
+
+###### Adding a Multi Select Field
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    ![](~/assets/images/extensions/advanced-round-robin/07-testing.png)
+  </div>
+
+  <div slot="right">
+    1.  Set the Field Type to Multi-Select
+    2.  Set a label
+    3.  Add options (one by one)
+    4.  Click Save
+  </div>
+</MultiColumn>
+
+###### Day and Time, Weight
+
+These fields don't require additional configuration when added to a group.
+
+###### Configured Fields
+
+Once done, the Fields tab should look like below.
+
+![](~/assets/images/extensions/advanced-round-robin/08-zapier-setup.png)
+
+### Add Agents
+
+The final step is to add agents to the group.
+
+![](~/assets/images/extensions/advanced-round-robin/09-zapier-action.png)
+
+When adding agents, you will be presented with the fields we configured, both the agent information fields and the routing fields.
+
+<MultiColumn columns={3} gap="md">
+  <div slot="left">
+    ![](~/assets/images/extensions/advanced-round-robin/10-agent-form-1.png)
+  </div>
+
+<div slot="center">![](~/assets/images/extensions/advanced-round-robin/11-agent-form-2.png)</div>
+
+  <div slot="right">
+    ![](~/assets/images/extensions/advanced-round-robin/12-agent-form-3.png)
+  </div>
+</MultiColumn>
+
+Once agents are set up, it should look like this:
+
+![](~/assets/images/extensions/advanced-round-robin/13-agents-list.png)
+
+Congratulations! You've successfully setup a round robin group.
+
+### Final Step – Testing
+
+To make sure routing is configured correctly, use the **Testing** tab. You can test based on various criteria.
+
+_Note: The Day and Time field will always use the current time._
+
+![](~/assets/images/extensions/advanced-round-robin/14-testing-tab.png)
