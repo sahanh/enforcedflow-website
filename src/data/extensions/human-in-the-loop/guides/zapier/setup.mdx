@@ -21,7 +21,25 @@ To setup a workflow similar to above leveraging human in the loop extension you 
 
 #### Step 1: Enable EnforcedFlow extension for Zapier
 
-The extension is currently invite only, you can get in by [visiting here](https://zapier.com/developer/public-invite/215376/986b22688fba404a907e58b2fff5a026/)
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    When setting up your Zap, search for **EnforcedFlow** in the Zapier app directory to get started.
+  </div>
+
+  <div slot="right">
+    ![Search for EnforcedFlow in Zapier directory](~/assets/images/extensions/human-in-the-loop/search-ef-in-zapier-directory.png)
+  </div>
+</MultiColumn>
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    Select **New Human in the Loop Task** as the action event.
+  </div>
+
+  <div slot="right">
+    ![Select New Human in the Loop Task action](~/assets/images/extensions/human-in-the-loop/select-hil-action.png)
+  </div>
+</MultiColumn>
 
 #### Step 2: Setup the action to generate content and send to a human
 
@@ -44,10 +62,13 @@ The first part of the setup looks like below.
   <div slot="left">
     The configuration options for New Human in Loop task take,
 
-    1. **Title**: A title shown in the page for the review
-    2. **Notes**: Notes for the review
-    3. **Content**: The content to be reviewed
-    4. **Metadata**: This is additional data that you can pass to use after review is done. They are not shown to the reviewer. In this example I am passing the email of the customer as a metadata.
+    1. **Title (Required)**: The title that will be displayed at the top of the review page. This helps reviewers understand what they're reviewing at a glance.
+    2. **Review Guidelines (Optional)**: General instructions or guidelines for the reviewer to follow. For example, you might specify "Match our brand tone and voice", "Ensure all facts are accurate", or "Keep the response under 500 words". These guidelines appear prominently at the top of every review to guide the reviewer's work.
+    3. **Content to Review (Required)**: The actual content that needs to be reviewed and potentially edited. This is the main text that the reviewer will work with during the review process.
+    4. **Source Content (Reference for Reviewer) (Optional)**: Contextual information that helps the reviewer understand the background or origin of the content being reviewed. This is particularly useful when reviewing AI-generated responses or summaries. For example, if you're reviewing an AI-generated customer support response, you would put the customer's original question here. If reviewing a summary, you would include the source article. This reference material helps reviewers make better decisions but is kept separate from the content being reviewed.
+    5. **Metadata (Optional)**: Custom data that you want to pass through the workflow but don't need to show to the reviewer. This is submitted as key-value pairs (like customer_email: "john@example.com" or ticket_id: "12345"). The metadata you provide here will be returned to you in the "Human in Loop Task Reviewed" trigger once the review is complete, allowing you to continue your automation with the necessary context. For example, you might pass the customer's email address or order ID so you can use it in subsequent workflow steps after the review is done.
+    6. **Allow metadata to be edited during review (Required)**: Controls whether the reviewer can see and modify the metadata values during the review process. Set to "No" (default) to keep metadata hidden from reviewers, or "Yes" if you want reviewers to be able to update these values.
+    7. <span id="webhook-name" style="scroll-margin-top: 100px;">**Webhook Name (Optional)**</span>: A unique identifier that allows you to organize and separate different types of review tasks. When you set a webhook name (like "blog-posts" or "support-emails"), only the corresponding "Human in Loop Task Reviewed" trigger with the matching webhook name will receive events from this action. This is useful when you have multiple review workflows running in parallel and want to ensure each type of task only triggers its specific follow-up actions. Without a webhook name, all review completions will trigger all "Human in Loop Task Reviewed" triggers.
   </div>
 
   <div slot="right">
