@@ -2,6 +2,11 @@
 title: "Human-in-the-Loop"
 description: "Add review and approval steps to AI-generated content and automated workflows"
 icon: "✅"
+setupGuides:
+  - label: "Zapier Setup Guide"
+    href: "/extensions/human-in-the-loop/guides/zapier/setup"
+  - label: "API Guide"
+    href: "https://app.enforcedflow.com/docs/api#/paths/api-v1-human-in-the-loop-tasks/post"
 ---
 
 ## What is Human-in-the-Loop?

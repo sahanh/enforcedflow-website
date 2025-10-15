@@ -75,6 +75,14 @@ const extensionsCollection = defineCollection({
     icon: z.string().optional(),
     category: z.string().optional(),
     draft: z.boolean().optional(),
+    setupGuides: z
+      .array(
+        z.object({
+          label: z.string(),
+          href: z.string(), // Supports both internal (/extensions/...) and external (https://...) links
+        })
+      )
+      .optional(),
     metadata: metadataDefinition(),
   }),
 });

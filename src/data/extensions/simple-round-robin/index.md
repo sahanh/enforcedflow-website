@@ -2,6 +2,11 @@
 title: "Simple Round Robin"
 description: "Basic sequential task distribution for straightforward team assignment rotation"
 icon: "🔄"
+setupGuides:
+  - label: "Zapier Setup Guide"
+    href: "/extensions/simple-round-robin/guides/zapier/setup"
+  - label: "API Guide"
+    href: "https://app.enforcedflow.com/docs/api#/paths/api-v1-round-robin-next/post"
 ---
 
 ## What is Simple Round Robin?

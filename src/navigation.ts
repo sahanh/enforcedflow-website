@@ -71,7 +71,7 @@ export const footerData = {
       links: [
         { text: 'About', href: getPermalink('/about') },
         { text: 'Contact', href: getPermalink('/contact') },
-        { text: 'API', href: getPermalink('/api') },
+        { text: 'API', href: 'https://app.enforcedflow.com/docs/api' },
       ],
     },
   ],
