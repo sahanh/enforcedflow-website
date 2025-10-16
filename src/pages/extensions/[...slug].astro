@@ -24,7 +24,7 @@ const { Content } = await render(extension);
 const setupGuides = extension.data.setupGuides || [];
 ---
 
-<ExtensionLayout title={extension.data.title} description={extension.data.description}>
+<ExtensionLayout title={extension.data.title} description={extension.data.description} image={extension.data.image}>
   <Content />
 
   <div slot="sidebar">

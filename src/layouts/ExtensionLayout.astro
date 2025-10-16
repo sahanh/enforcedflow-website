@@ -1,5 +1,6 @@
 ---
 import PageLayout from '~/layouts/PageLayout.astro';
+import { Image } from 'astro:assets';
 import type { MetaData } from '~/types';
 
 export interface Props {
@@ -7,15 +8,18 @@ export interface Props {
     title: string;
     description: string;
     icon?: string;
+    image?: string;
   };
   title?: string;
   description?: string;
+  image?: string;
 }
 
-const { frontmatter, title, description } = Astro.props;
+const { frontmatter, title, description, image } = Astro.props;
 
 const pageTitle = frontmatter?.title || title;
 const pageDescription = frontmatter?.description || description;
+const pageImage = frontmatter?.image || image;
 
 const metadata: MetaData = {
   title: pageTitle,
@@ -34,6 +38,15 @@ const metadata: MetaData = {
         {pageDescription}
       </p>
     </div>
+
+    <!-- Hero Image (Full Width) -->
+    {
+      pageImage && (
+        <div class="mb-12">
+          <img src={pageImage} alt={pageTitle} class="w-full rounded-lg shadow-lg" />
+        </div>
+      )
+    }
 
     <!-- Content Area -->
     <div class="grid md:grid-cols-4 gap-8">

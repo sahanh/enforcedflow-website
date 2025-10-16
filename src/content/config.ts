@@ -73,6 +73,7 @@ const extensionsCollection = defineCollection({
     title: z.string(),
     description: z.string(),
     icon: z.string().optional(),
+    image: z.string().optional(), // Hero image displayed between title and content
     category: z.string().optional(),
     draft: z.boolean().optional(),
     setupGuides: z
