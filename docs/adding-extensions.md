@@ -37,6 +37,12 @@ src/data/extensions/task-scheduler/
 title: 'Your Extension Name'
 description: 'Brief description of what it does'
 icon: '🎯'  # Optional emoji
+image: '/images/extensions/your-extension-slug/hero-image.png'  # Optional hero image
+setupGuides:
+  - label: "Zapier Setup Guide"
+    href: "/extensions/your-extension-slug/guides/zapier/setup"
+  - label: "API Guide"
+    href: "https://app.enforcedflow.com/docs/api#/your-endpoint"
 ---
 ```
 
@@ -56,7 +62,47 @@ extension: "{extension-slug}"  # Must match folder name
 ---
 ```
 
-## 3. Adding to Navigation
+## 3. Adding Hero Images (Optional)
+
+Hero images appear full-width between the title/description and the main content area.
+
+### Image Guidelines
+
+**Recommended Specifications:**
+- **Width:** 1200-1400px
+- **Format:** PNG (for UI/screenshots) or JPG/WebP (for graphics)
+- **File size:** Keep under 200-300KB (use TinyPNG or similar to optimize)
+- **Aspect ratio:** 16:9 (1400×788px) or 3:2 (1400×933px) for best results
+
+### Where to Place Images
+
+Images must be placed in the `public/` directory to work in production:
+
+```
+public/images/extensions/{extension-slug}/
+└── hero-image.png
+```
+
+**Example:**
+```
+public/images/extensions/human-in-the-loop/
+└── hil-featured-image.png
+```
+
+### Adding Image to Frontmatter
+
+Reference the image using the `/images/` path:
+
+```yaml
+---
+title: "Your Extension"
+image: "/images/extensions/your-extension-slug/hero-image.png"
+---
+```
+
+**Important:** Do NOT use `/src/assets/` paths - they won't work in production builds. Always use the `public/images/` directory and reference with `/images/` paths.
+
+## 4. Adding to Navigation
 
 Update `src/navigation.ts` to add your extension to the site navigation:
 
@@ -74,57 +120,92 @@ This automatically adds your extension to:
 - Header "Extensions" dropdown menu
 - Footer "Extensions" section
 
-## 4. Adding More Platform Guides
+## 5. Configuring Setup Guides
 
-To add guides for other platforms (Make, n8n, etc.):
+Setup guides appear in the sidebar "Setup Guides" box on the extension page. Configure them in the frontmatter using the `setupGuides` field.
 
-### Create Additional Guide Files
+### Setup Guide Configuration
+
+In your `index.md` frontmatter:
+
+```yaml
+setupGuides:
+  - label: "Zapier Setup Guide"
+    href: "/extensions/your-extension-slug/guides/zapier/setup"
+  - label: "API Guide"
+    href: "https://app.enforcedflow.com/docs/api#/your-endpoint"
+```
+
+**Features:**
+- Supports both **internal links** (relative paths like `/extensions/...`)
+- Supports **external links** (full URLs like `https://...`)
+- External links automatically open in a new tab
+- Shows in order listed in frontmatter
+- If no `setupGuides` are defined, the sidebar section won't appear
+
+### Creating Guide Pages
+
+To add guides for different platforms:
+
+**1. Create the guide file:**
 ```
 guides/
 ├── zapier/
 │   └── setup.md
 ├── make/
-│   └── setup.md       # New platform
-└── n8n/
-    └── setup.md       # Another platform
+│   └── setup.md       # Additional platform
+└── api/
+    └── setup.md       # API integration guide
 ```
 
-### Frontmatter for Each Platform
+**2. Add to setupGuides in `index.md`:**
+```yaml
+setupGuides:
+  - label: "Zapier Setup Guide"
+    href: "/extensions/{slug}/guides/zapier/setup"
+  - label: "Make Setup Guide"
+    href: "/extensions/{slug}/guides/make/setup"
+  - label: "API Integration"
+    href: "/extensions/{slug}/guides/api/setup"
+```
+
+**3. Frontmatter for each guide:**
 ```yaml
 ---
 title: "Extension Name in Make"
 description: "Set up [feature] in your Make scenarios"
-platform: "make"        # Use: "zapier", "make", or "n8n"
-extension: "{slug}"
+platform: "make"        # Use: "zapier", "make", "n8n", or "api"
+extension: "{slug}"     # Must match extension folder name
 ---
 ```
-
-### Automatic Sidebar Detection
-
-**No code changes needed!** The extension page automatically:
-- Detects all guides for that extension
-- Groups them by platform
-- Shows "Setup Guides" section with links
-- Example: "Zapier Setup Guide", "Make Setup Guide"
-
-**If no guides exist:** The "Setup Guides" section won't appear at all.
 
 ## Quick Reference
 
 **Folder structure:**
 ```
-extensions/{slug}/
-├── index.md           → /extensions/{slug}
+src/data/extensions/{slug}/
+├── index.md                      → /extensions/{slug}
 └── guides/
     └── {platform}/
-        └── setup.md   → /extensions/{slug}/guides/{platform}/setup
+        └── setup.md              → /extensions/{slug}/guides/{platform}/setup
+
+public/images/extensions/{slug}/
+└── hero-image.png                → /images/extensions/{slug}/hero-image.png
 ```
 
-**Required changes:**
-1. Create folder + files
-2. Add to navigation.ts
+**Required steps:**
+1. Create extension folder + `index.md`
+2. Add to `navigation.ts`
 3. Done!
 
-**Optional:**
+**Optional enhancements:**
+- Add hero image (place in `public/images/extensions/{slug}/`)
+- Configure `setupGuides` in frontmatter (with internal/external links)
+- Add multiple platform guides
 - Add ExtensionCard to homepage (`src/pages/index.astro`)
-- Add multiple platform guides (auto-detected)
+
+**Key reminders:**
+- Images must be in `public/images/` (not `src/assets/`)
+- Use `/images/` paths in frontmatter for images
+- `setupGuides` supports both internal and external links
+- External links in `setupGuides` open in new tabs automatically
