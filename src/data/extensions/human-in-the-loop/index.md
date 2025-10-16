@@ -2,7 +2,7 @@
 title: "Human-in-the-Loop"
 description: "Add review and approval steps to AI-generated content and automated workflows"
 icon: "✅"
-image: "/src/assets/images/extensions/human-in-the-loop/hil-featured-image.png"
+image: "/images/extensions/human-in-the-loop/hil-featured-image.png"
 setupGuides:
   - label: "Zapier Setup Guide"
     href: "/extensions/human-in-the-loop/guides/zapier/setup"
