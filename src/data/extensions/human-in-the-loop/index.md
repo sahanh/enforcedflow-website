@@ -38,7 +38,7 @@ Real-world scenarios where the extension is used:
 
 4. **AI assistant to quickly refine content** - Instead of manually editing, guide the inbuilt chat assistant to update the output content quickly.
 
-5. **Batch support (coming soon)** - Review a batch of pending human in the loop tasks at once.
+5. **Batch support** - Group pending tasks and review multiple items together in one session.
 
 ## Getting Started
 
