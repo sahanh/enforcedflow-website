@@ -120,7 +120,7 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json',
+            Accept: 'application/json',
           },
           body: JSON.stringify({
             subject: 'New contact form submission',
@@ -130,12 +130,12 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
         });
 
         if (response.ok) {
-          showMessage('Thank you! Your message has been sent successfully. We\'ll get back to you soon.', 'success');
+          showMessage("Thank you! Your message has been sent successfully. We'll get back to you soon.", 'success');
           form.reset();
         } else {
           showMessage('Something went wrong. Please try again later.', 'error');
         }
-      } catch (error) {
+      } catch {
         showMessage('Failed to send message. Please check your connection and try again.', 'error');
       } finally {
         if (submitButton) {
