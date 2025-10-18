@@ -6,7 +6,8 @@
       "Bash(npm run dev:*)",
       "Bash(curl:*)",
       "Read(//private/tmp/**)",
-      "Read(//Users/sahan/Downloads/**)"
+      "Read(//Users/sahan/Downloads/**)",
+      "Bash(npm run check)"
     ],
     "deny": [],
     "ask": []
