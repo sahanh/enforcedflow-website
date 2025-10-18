@@ -40,28 +40,21 @@ export interface Props extends HTMLAttributes<'div'> {
   class?: string;
 }
 
-const {
-  columns = 2,
-  ratio = 'equal',
-  gap = 'md',
-  breakpoint = 'md',
-  class: className,
-  ...rest
-} = Astro.props;
+const { columns = 2, ratio = 'equal', gap = 'md', breakpoint = 'md', class: className, ...rest } = Astro.props;
 
 // Map gap to spacing classes
 const gapClasses = {
-  'sm': 'gap-4',
-  'md': 'gap-8',
-  'lg': 'gap-12',
-  'xl': 'gap-16',
+  sm: 'gap-4',
+  md: 'gap-8',
+  lg: 'gap-12',
+  xl: 'gap-16',
 };
 
 // Map breakpoint to responsive prefix
 const breakpointMap = {
-  'sm': 'sm',
-  'md': 'md',
-  'lg': 'lg',
+  sm: 'sm',
+  md: 'md',
+  lg: 'lg',
 };
 
 // Get the appropriate grid class based on columns, ratio and breakpoint
@@ -106,28 +99,22 @@ const getColumnSpans = () => {
 const columnSpans = getColumnSpans();
 ---
 
-<div
-  class:list={[
-    'grid',
-    getGridClass(),
-    gapClasses[gap],
-    className
-  ]}
-  {...rest}
->
+<div class:list={['grid', getGridClass(), gapClasses[gap], className]} {...rest}>
   <div class:list={['multi-column-left', columnSpans.left]}>
     <slot name="left">
       <slot name="column-1" />
     </slot>
   </div>
 
-  {columns === 3 && (
-    <div class:list={['multi-column-center', columnSpans.center]}>
-      <slot name="center">
-        <slot name="column-2" />
-      </slot>
-    </div>
-  )}
+  {
+    columns === 3 && (
+      <div class:list={['multi-column-center', columnSpans.center]}>
+        <slot name="center">
+          <slot name="column-2" />
+        </slot>
+      </div>
+    )
+  }
 
   <div class:list={['multi-column-right', columnSpans.right]}>
     <slot name="right">

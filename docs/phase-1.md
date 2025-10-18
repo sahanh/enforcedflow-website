@@ -9,26 +9,31 @@
 ## What We're Building
 
 ### 1. Homepage
+
 - Hero section (headline, subheadline, CTA)
 - 3 extension blocks/cards below hero
 - Clean, simple layout (similar to current enforcedflow.com)
 
 ### 2. Extension Landing Pages (3 separate pages)
+
 - `/extensions/round-robin` (Advanced Round Robin)
 - `/extensions/simple-round-robin` (Simple Round Robin)
 - `/extensions/human-in-the-loop` (Human-in-the-Loop)
 
 ### 3. Implementation Guides (3 pages)
+
 - `/guides/zapier/round-robin`
 - `/guides/zapier/simple-round-robin`
 - `/guides/zapier/human-in-the-loop`
 
 ### 4. Navigation
+
 - Simple nav: Home | Extensions | Guides
 - Extension dropdown showing 3 extensions
 - Guides organized by platform
 
 ### Deferred to Later
+
 - WordPress migration (manual, as needed)
 - Static pages (About, Privacy, Terms, Contact)
 - Blog posts (use existing AstroWind blog)
@@ -56,12 +61,15 @@ src/data/
 ## Implementation Steps
 
 ### Step 1: Content Collections Setup (30 min)
+
 **Tasks:**
+
 - [ ] Update `src/content/config.ts` with extensions and guides collections
 - [ ] Create directory structure (`src/data/extensions`, `src/data/guides/zapier`)
 - [ ] Define schema for frontmatter
 
 **Schema:**
+
 ```typescript
 // Extensions (Tier 1)
 {
@@ -85,7 +93,9 @@ src/data/
 ---
 
 ### Step 2: Layouts & Components (2-3 hours)
+
 **Tasks:**
+
 - [ ] Create `src/layouts/ExtensionLayout.astro` (Tier 1 pages)
   - Full-width hero with title/description
   - Table of contents sidebar
@@ -114,7 +124,9 @@ src/data/
 ---
 
 ### Step 3: Homepage (1-2 hours)
+
 **Tasks:**
+
 - [ ] Create/update `src/pages/index.astro`
 - [ ] Hero section
   - Headline: "Enhance Your Zapier Automations with Smart Extensions"
@@ -133,7 +145,9 @@ src/data/
 ### Step 4: Content Creation - Extensions (2-3 hours)
 
 #### `/extensions/round-robin`
+
 **Sections:**
+
 - What is Advanced Round Robin?
 - When to use it
 - Key features:
@@ -146,7 +160,9 @@ src/data/
 - Popular recipes (coming soon)
 
 #### `/extensions/simple-round-robin`
+
 **Sections:**
+
 - What is Simple Round Robin?
 - When to use it (basic rotation needs)
 - Key features:
@@ -158,7 +174,9 @@ src/data/
 - Getting started → link to Zapier guide
 
 #### `/extensions/human-in-the-loop`
+
 **Sections:**
+
 - What is Human-in-the-Loop?
 - When to use it (AI workflows, compliance, accuracy)
 - Key features:
@@ -174,7 +192,9 @@ src/data/
 ### Step 5: Content Creation - Guides (2-3 hours)
 
 #### `/guides/zapier/round-robin`
+
 **Sections:**
+
 - Prerequisites
 - Concepts → link to extension page
 - Installation & setup
@@ -190,7 +210,9 @@ src/data/
 - Next steps
 
 #### `/guides/zapier/simple-round-robin`
+
 **Sections:**
+
 - Prerequisites
 - Concepts → link to extension page
 - Installation & setup
@@ -202,7 +224,9 @@ src/data/
 - Next steps
 
 #### `/guides/zapier/human-in-the-loop`
+
 **Sections:**
+
 - Prerequisites
 - Concepts → link to extension page
 - Installation & setup
@@ -221,7 +245,9 @@ src/data/
 ---
 
 ### Step 6: Routing & Navigation (1 hour)
+
 **Tasks:**
+
 - [ ] Create dynamic routes:
   - `src/pages/extensions/[...slug].astro`
   - `src/pages/guides/[platform]/[...slug].astro`
@@ -248,7 +274,9 @@ src/data/
 ---
 
 ### Step 7: Polish & Testing (1-2 hours)
+
 **Tasks:**
+
 - [ ] SEO optimization:
   - Meta titles & descriptions
   - Open Graph tags
@@ -269,18 +297,21 @@ src/data/
 ## Content Guidelines
 
 ### Extension Pages (Tier 1)
+
 **Tone:** Educational, conceptual
 **Length:** 500-800 words
 **Focus:** The "why" and "what"
 **Includes:** Diagrams, use cases, links to guides
 
 ### Guide Pages (Tier 2)
+
 **Tone:** Technical, instructional
 **Length:** 800-1500 words
 **Focus:** The "how"
 **Includes:** Screenshots, step-by-step instructions, code examples
 
 ### Homepage
+
 **Tone:** Marketing, value-driven
 **Length:** Concise (200-300 words + cards)
 **Focus:** Quick overview, clear CTAs
@@ -290,6 +321,7 @@ src/data/
 ## Success Criteria
 
 **Functionality:**
+
 - ✅ Homepage displays properly with hero + extension blocks
 - ✅ Each extension has a dedicated landing page
 - ✅ Each extension has a Zapier implementation guide
@@ -297,12 +329,14 @@ src/data/
 - ✅ All internal links connect properly
 
 **Content:**
+
 - ✅ 3 extension landing pages (draft quality, refinable later)
 - ✅ 3 Zapier guides (comprehensive setup instructions)
 - ✅ Homepage with clear value proposition
 - ✅ SEO basics in place (titles, descriptions)
 
 **Technical:**
+
 - ✅ Fast page loads (<2s)
 - ✅ Mobile responsive
 - ✅ Clean URLs
@@ -310,6 +344,7 @@ src/data/
 - ✅ Content collections functioning properly
 
 **Design:**
+
 - ✅ Clean, professional appearance
 - ✅ Easy navigation
 - ✅ Clear CTAs
@@ -321,11 +356,13 @@ src/data/
 ## Timeline Estimate
 
 **Day 1:**
+
 - Morning: Content collections setup + directory structure (1 hour)
 - Afternoon: Build layouts & components (3 hours)
 - Evening: Homepage implementation (2 hours)
 
 **Day 2:**
+
 - Morning: Write extension landing pages (3 hours)
 - Afternoon: Write Zapier guides (3 hours)
 - Evening: Routing, navigation, polish (2 hours)
@@ -337,6 +374,7 @@ src/data/
 ## Design Decisions
 
 ### Homepage Layout
+
 ```
 ┌─────────────────────────────────────┐
 │           HERO SECTION              │
@@ -355,12 +393,14 @@ src/data/
 ```
 
 ### Extension Card Components
+
 - Icon/visual at top
 - Title (H3)
 - 2-3 sentence description
 - Two CTAs: "Learn More" (→ extension page) | "Get Started" (→ guide)
 
 ### Color Scheme
+
 - Use AstroWind defaults initially
 - Can customize primary colors to match EnforcedFlow brand later
 
@@ -369,6 +409,7 @@ src/data/
 ## Key Files to Create/Modify
 
 **New Files:**
+
 ```
 src/layouts/ExtensionLayout.astro
 src/layouts/GuideLayout.astro
@@ -384,6 +425,7 @@ src/pages/guides/[platform]/[...slug].astro
 ```
 
 **Modified Files:**
+
 ```
 src/content/config.ts (add collections)
 src/pages/index.astro (homepage)
@@ -396,18 +438,21 @@ src/config.yaml (site metadata)
 ## Notes & Considerations
 
 ### Content Strategy
+
 - Start with draft content, refine iteratively
 - Focus on structure and information architecture first
 - Can enhance with better copy, screenshots, diagrams later
 - WordPress content can be migrated piece by piece as needed
 
 ### Technical Approach
+
 - Use AstroWind's existing components where possible
 - Leverage Tailwind for styling
 - Keep it simple - premature optimization kills momentum
 - Git commit after each major step
 
 ### Future Enhancements (Post Phase 1)
+
 - Add snippet system for reusable content
 - Create Tier 3 recipes (vendor-specific)
 - Enhance with better visuals/diagrams
@@ -421,9 +466,11 @@ src/config.yaml (site metadata)
 ## Blocked/Dependent Items
 
 **Waiting on:**
+
 - None - can start immediately
 
 **Dependencies:**
+
 - AstroWind template (✅ installed)
 - Content collections understanding (✅ have schema)
 - Extension details (✅ analyzed from current site)

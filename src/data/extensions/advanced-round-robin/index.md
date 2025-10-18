@@ -3,10 +3,10 @@ title: 'Advanced Round Robin Assignment'
 description: 'Distribute tasks intelligently across your team with skill-based, time-based, and priority-based routing'
 icon: '⚙️'
 setupGuides:
-  - label: "Zapier Setup Guide"
-    href: "/extensions/advanced-round-robin/guides/zapier/setup"
-  - label: "API Guide"
-    href: "https://app.enforcedflow.com/docs/api#/paths/api-v1-advanced-round-robin-groupId--next-agent/post"
+  - label: 'Zapier Setup Guide'
+    href: '/extensions/advanced-round-robin/guides/zapier/setup'
+  - label: 'API Guide'
+    href: 'https://app.enforcedflow.com/docs/api#/paths/api-v1-advanced-round-robin-groupId--next-agent/post'
 ---
 
 ## What is Advanced Round Robin?

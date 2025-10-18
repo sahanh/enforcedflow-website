@@ -6,16 +6,6 @@ import logoDark from '../assets/images/logo-dark.png';
 ---
 
 <div class="flex items-center">
-  <Image
-    src={logoLight}
-    alt={SITE?.name}
-    class="h-8 w-auto dark:hidden"
-    loading="eager"
-  />
-  <Image
-    src={logoDark}
-    alt={SITE?.name}
-    class="h-8 w-auto hidden dark:block"
-    loading="eager"
-  />
+  <Image src={logoLight} alt={SITE?.name} class="h-8 w-auto dark:hidden" loading="eager" />
+  <Image src={logoDark} alt={SITE?.name} class="h-8 w-auto hidden dark:block" loading="eager" />
 </div>

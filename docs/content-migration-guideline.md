@@ -5,15 +5,18 @@ A comprehensive guide for migrating web content to MDX guide format in the Enfor
 ## Overview
 
 ### Purpose
+
 This guideline provides a systematic approach for migrating tutorial content from web pages (WordPress, blog posts, etc.) to the MDX-based guide system while preserving the original content and enhancing it with modern layout features.
 
 ### When to Use
+
 - Migrating blog posts to product guides
 - Converting tutorial content to documentation
 - Updating existing guides with new web content
 - Standardizing content across platforms
 
 ### Key Principle
+
 **Preserve original content verbatim** - Do not alter, paraphrase, or rewrite the source content during migration.
 
 ## Migration Process
@@ -23,10 +26,12 @@ This guideline provides a systematic approach for migrating tutorial content fro
 Extract the complete HTML content from the source web page.
 
 **Tools:**
+
 - WebFetch tool for programmatic extraction
 - Browser DevTools for manual inspection
 
 **What to Extract:**
+
 - All text content (headings, paragraphs, lists)
 - Complete HTML structure including layout divs
 - All image URLs
@@ -47,11 +52,13 @@ Analyze the HTML structure to detect multi-column layouts. Content sources may u
 #### Option A: WordPress Gutenberg Columns
 
 Look for the parent container:
+
 ```html
-<div class="wp-block-columns">
+<div class="wp-block-columns"></div>
 ```
 
 Count the direct children:
+
 ```html
   <div class="wp-block-column">[CONTENT]</div>
   <div class="wp-block-column">[CONTENT]</div>
@@ -61,6 +68,7 @@ Count the direct children:
 ```
 
 **Detection Rule:** Number of `wp-block-column` children = Number of columns
+
 - 2 children = 2-column layout
 - 3 children = 3-column layout
 
@@ -69,16 +77,19 @@ Count the direct children:
 #### Option B: Kadence Columns
 
 Look for the parent container:
+
 ```html
-<div class="kb-row-layout-wrap kb-row-layout-id... wp-block-kadence-rowlayout">
+<div class="kb-row-layout-wrap kb-row-layout-id... wp-block-kadence-rowlayout"></div>
 ```
 
 Look for the column wrapper with column count class:
+
 ```html
-<div class="kt-row-column-wrap kt-has-2-columns ...">
+<div class="kt-row-column-wrap kt-has-2-columns ..."></div>
 ```
 
 Individual columns:
+
 ```html
   <div class="wp-block-kadence-column kadence-column...">
     <div class="kt-inside-inner-col">
@@ -95,10 +106,12 @@ Individual columns:
 ```
 
 **Detection Rule:** Look for `kt-has-X-columns` class on the wrapper
+
 - `kt-has-2-columns` = 2-column layout
 - `kt-has-3-columns` = 3-column layout
 
 **Kadence Structure Notes:**
+
 - Kadence uses nested wrappers: `kb-row-layout-wrap` → `kt-row-column-wrap` → `wp-block-kadence-column` → `kt-inside-inner-col`
 - The column count is explicitly stated in the `kt-has-X-columns` class
 - Each column's content is inside `kt-inside-inner-col`
@@ -113,6 +126,7 @@ Collect and organize all images from the source content.
 **1. List all image URLs**
 
 Extract image URLs from the HTML:
+
 ```html
 <img src="https://example.com/wp-content/uploads/2025/09/screenshot-name.png" />
 ```
@@ -126,6 +140,7 @@ mkdir -p src/assets/images/extensions/{extension-name}
 **3. Download images**
 
 Use curl to download each image:
+
 ```bash
 cd src/assets/images/extensions/{extension-name}
 curl -s -o "01-descriptive-name.png" "https://example.com/image-url.png"
@@ -133,12 +148,14 @@ curl -s -o "02-descriptive-name.png" "https://example.com/image-url-2.png"
 ```
 
 **Naming Convention:**
+
 - Format: `##-descriptive-name.{ext}`
 - Sequential numbering: `01-`, `02-`, `03-`, etc.
 - Descriptive names: `create-group`, `agent-fields`, `zapier-setup`
 - Keep extensions: `.png`, `.jpg`, `.gif`
 
 **Examples:**
+
 - `01-create-group.png`
 - `02-agent-fields.png`
 - `03-routing-fields.png`
@@ -157,6 +174,7 @@ src/data/extensions/{extension-name}/guides/{platform}/setup.mdx
 ```
 
 Example:
+
 ```
 src/data/extensions/advanced-round-robin/guides/zapier/setup.mdx
 ```
@@ -164,6 +182,7 @@ src/data/extensions/advanced-round-robin/guides/zapier/setup.mdx
 **2. Convert Format (if needed)**
 
 Rename `.md` to `.mdx` to enable component usage:
+
 ```bash
 mv setup.md setup.mdx
 ```
@@ -172,18 +191,21 @@ mv setup.md setup.mdx
 
 ```yaml
 ---
-title: "Guide Title"
-description: "Brief description of what this guide covers"
-platform: "zapier"
-extension: "extension-name"
+title: 'Guide Title'
+description: 'Brief description of what this guide covers'
+platform: 'zapier'
+extension: 'extension-name'
 ---
 ```
 
 **4. Import Components**
 
 Add at the top of the MDX file (after frontmatter):
+
 ```mdx
 import MultiColumn from '~/components/ui/MultiColumn.astro';
+
+;
 ```
 
 ---
@@ -193,6 +215,7 @@ import MultiColumn from '~/components/ui/MultiColumn.astro';
 Migrate the text content verbatim from the source.
 
 **Process:**
+
 1. Extract text from each HTML element
 2. Convert HTML headings to Markdown headings
 3. Preserve lists (ordered and unordered)
@@ -204,7 +227,9 @@ Migrate the text content verbatim from the source.
 ```html
 <h2>Setup Agent Fields</h2>
 ```
+
 →
+
 ```markdown
 ## Setup Agent Fields
 ```
@@ -215,7 +240,9 @@ Migrate the text content verbatim from the source.
   <li>Set a label</li>
 </ol>
 ```
+
 →
+
 ```markdown
 1. Set the Field Type to Multi-Select
 2. Set a label
@@ -224,7 +251,9 @@ Migrate the text content verbatim from the source.
 ```html
 <p>Before setting up agents, you need to <strong>decide</strong> what kind of information to store.</p>
 ```
+
 →
+
 ```markdown
 Before setting up agents, you need to **decide** what kind of information to store.
 ```
@@ -232,6 +261,7 @@ Before setting up agents, you need to **decide** what kind of information to sto
 **Image Placeholders:**
 
 Replace image HTML with Markdown syntax:
+
 ```markdown
 ![](~/assets/images/extensions/{extension-name}/01-image-name.png)
 ```
@@ -249,6 +279,7 @@ Convert HTML column structures to MultiColumn components.
 **2-Column Layout:**
 
 HTML:
+
 ```html
 <div class="wp-block-columns">
   <div class="wp-block-column">
@@ -266,6 +297,7 @@ HTML:
 ```
 
 MDX:
+
 ```mdx
 <MultiColumn ratio="equal" gap="md">
   <div slot="left">
@@ -282,6 +314,7 @@ MDX:
 **3-Column Layout:**
 
 HTML:
+
 ```html
 <div class="wp-block-columns">
   <div class="wp-block-column">
@@ -297,15 +330,14 @@ HTML:
 ```
 
 MDX:
+
 ```mdx
 <MultiColumn columns={3} gap="md">
   <div slot="left">
     ![](~/assets/images/extensions/{extension-name}/image1.png)
   </div>
 
-  <div slot="center">
-    ![](~/assets/images/extensions/{extension-name}/image2.png)
-  </div>
+<div slot="center">![](~/assets/images/extensions/{extension - name}/image2.png)</div>
 
   <div slot="right">
     ![](~/assets/images/extensions/{extension-name}/image3.png)
@@ -320,6 +352,7 @@ MDX:
 **2-Column Layout (List + Image):**
 
 HTML:
+
 ```html
 <div class="kb-row-layout-wrap wp-block-kadence-rowlayout">
   <div class="kt-row-column-wrap kt-has-2-columns">
@@ -346,6 +379,7 @@ HTML:
 ```
 
 MDX:
+
 ```mdx
 <MultiColumn ratio="equal" gap="md">
   <div slot="left">
@@ -364,12 +398,16 @@ MDX:
 **2-Column Layout (Text + Image with Caption):**
 
 HTML:
+
 ```html
 <div class="kb-row-layout-wrap wp-block-kadence-rowlayout">
   <div class="kt-row-column-wrap kt-has-2-columns">
     <div class="wp-block-kadence-column">
       <div class="kt-inside-inner-col">
-        <p>The output from the new human in the loop task is a url. A human can visit this url in a browser to review the content.</p>
+        <p>
+          The output from the new human in the loop task is a url. A human can visit this url in a browser to review the
+          content.
+        </p>
       </div>
     </div>
     <div class="wp-block-kadence-column">
@@ -385,6 +423,7 @@ HTML:
 ```
 
 MDX:
+
 ```mdx
 <MultiColumn ratio="equal" gap="md">
   <div slot="left">
@@ -400,6 +439,7 @@ MDX:
 ---
 
 **Key Points:**
+
 - Extract content from within `kt-inside-inner-col` for Kadence
 - Extract content from `wp-block-column` for WordPress Gutenberg
 - Preserve markdown formatting within slots
@@ -416,6 +456,7 @@ Apply special formatting to images that need sizing or centering.
 **Full-Width Images (Default):**
 
 No special formatting needed:
+
 ```mdx
 ![](~/assets/images/extensions/{extension-name}/image.png)
 ```
@@ -423,6 +464,7 @@ No special formatting needed:
 **Centered & Sized Images:**
 
 For images that should be centered and limited in width:
+
 ```mdx
 <div style="display: flex; justify-content: center; width: 100%;">
   <div style="width: 70%;">
@@ -434,12 +476,14 @@ For images that should be centered and limited in width:
 ```
 
 **Width Options:**
+
 - `50%` - Half width
 - `60%` - Moderately reduced
 - `70%` - Standard for wide images
 - `80%` - Slightly reduced
 
 **When to Use:**
+
 - Wide landscape screenshots that dominate the page
 - Images that need emphasis but not full width
 - Hero images or primary visuals
@@ -450,12 +494,12 @@ For images that should be centered and limited in width:
 
 ### Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `columns` | `2` \| `3` | `2` | Number of columns to display |
-| `ratio` | `'equal'` \| `'left-wide'` \| `'right-wide'` | `'equal'` | Column width distribution (2-column only) |
-| `gap` | `'sm'` \| `'md'` \| `'lg'` \| `'xl'` | `'md'` | Spacing between columns |
-| `breakpoint` | `'sm'` \| `'md'` \| `'lg'` | `'md'` | Responsive breakpoint for stacking |
+| Prop         | Type                                         | Default   | Description                               |
+| ------------ | -------------------------------------------- | --------- | ----------------------------------------- |
+| `columns`    | `2` \| `3`                                   | `2`       | Number of columns to display              |
+| `ratio`      | `'equal'` \| `'left-wide'` \| `'right-wide'` | `'equal'` | Column width distribution (2-column only) |
+| `gap`        | `'sm'` \| `'md'` \| `'lg'` \| `'xl'`         | `'md'`    | Spacing between columns                   |
+| `breakpoint` | `'sm'` \| `'md'` \| `'lg'`                   | `'md'`    | Responsive breakpoint for stacking        |
 
 ### Gap Sizes
 
@@ -475,10 +519,12 @@ For images that should be centered and limited in width:
 ### Slots
 
 **2-Column:**
+
 - `left` - Left column content
 - `right` - Right column content
 
 **3-Column:**
+
 - `left` - Left column content
 - `center` - Center column content
 - `right` - Right column content
@@ -486,41 +532,30 @@ For images that should be centered and limited in width:
 ### Usage Examples
 
 **Equal 2-Column:**
+
 ```mdx
 <MultiColumn ratio="equal" gap="md">
-  <div slot="left">
-    Content here
-  </div>
-  <div slot="right">
-    Content here
-  </div>
+  <div slot="left">Content here</div>
+  <div slot="right">Content here</div>
 </MultiColumn>
 ```
 
 **Left-Wide 2-Column:**
+
 ```mdx
 <MultiColumn ratio="left-wide" gap="lg">
-  <div slot="left">
-    Main content (60%)
-  </div>
-  <div slot="right">
-    Sidebar (40%)
-  </div>
+  <div slot="left">Main content (60%)</div>
+  <div slot="right">Sidebar (40%)</div>
 </MultiColumn>
 ```
 
 **3-Column:**
+
 ```mdx
 <MultiColumn columns={3} gap="md">
-  <div slot="left">
-    Content 1
-  </div>
-  <div slot="center">
-    Content 2
-  </div>
-  <div slot="right">
-    Content 3
-  </div>
+  <div slot="left">Content 1</div>
+  <div slot="center">Content 2</div>
+  <div slot="right">Content 3</div>
 </MultiColumn>
 ```
 
@@ -638,18 +673,21 @@ src/
 ### Issue 1: Astro Compiler Error - Slot Name Must Be Static
 
 **Error Message:**
+
 ```
 slot[name] must be a static string
 ```
 
 **Cause:**
 Trying to use a dynamic expression for slot name:
+
 ```mdx
-<slot name={columns === 3 ? "column-3" : "column-2"} />
+<slot name={columns === 3 ? 'column-3' : 'column-2'} />
 ```
 
 **Solution:**
 Use conditional rendering with static slot names:
+
 ```mdx
 {columns === 3 ? <slot name="column-3" /> : <slot name="column-2" />}
 ```
@@ -659,16 +697,19 @@ Use conditional rendering with static slot names:
 ### Issue 2: Image Paths Not Resolving
 
 **Symptoms:**
+
 - Images show as broken links
 - 404 errors in browser console
 
 **Common Causes:**
+
 - Using relative paths: `./images/...`
 - Using absolute paths: `/images/...`
 - Missing `~` alias
 
 **Solution:**
 Always use the `~` alias for Astro path resolution:
+
 ```mdx
 ![](~/assets/images/extensions/{extension-name}/image.png)
 ```
@@ -678,12 +719,14 @@ Always use the `~` alias for Astro path resolution:
 ### Issue 3: Images Too Wide
 
 **Symptoms:**
+
 - Images dominate the page
 - Layout feels unbalanced
 - Text content squeezed
 
 **Solution:**
 Wrap image in centered container with width limit:
+
 ```mdx
 <div style="display: flex; justify-content: center; width: 100%;">
   <div style="width: 70%;">
@@ -701,15 +744,17 @@ Adjust percentage as needed (60%, 70%, 80%).
 ### Issue 4: MultiColumn Component Not Found
 
 **Error Message:**
+
 ```
 Cannot find module '~/components/ui/MultiColumn.astro'
 ```
 
 **Solution:**
 Ensure the import statement is at the top of your MDX file:
+
 ```mdx
 ---
-title: "Your Guide"
+title: 'Your Guide'
 ---
 
 import MultiColumn from '~/components/ui/MultiColumn.astro';
@@ -722,6 +767,7 @@ import MultiColumn from '~/components/ui/MultiColumn.astro';
 ### Issue 5: Columns Not Stacking on Mobile
 
 **Symptoms:**
+
 - Columns remain side-by-side on small screens
 - Content squeezed or cut off
 - Horizontal scrolling required
@@ -731,6 +777,7 @@ Incorrect or missing breakpoint configuration.
 
 **Solution:**
 MultiColumn handles responsive behavior automatically. Ensure you're not overriding with custom CSS. The component uses:
+
 - Mobile (< 768px): Stacked vertically
 - Desktop (≥ 768px): Side-by-side
 
@@ -741,12 +788,15 @@ No additional configuration needed.
 ## Example Migration
 
 ### Source: WordPress Blog Post
+
 **URL:** `https://enforcedflow.com/advance-actions/skill-based-time-based-and-priority-based-round-robin/`
 
 ### Result: MDX Guide
+
 **Path:** `src/data/extensions/advanced-round-robin/guides/zapier/setup.mdx`
 
 ### Images Downloaded: 19 images
+
 ```
 01-create-group.png
 02-agent-fields.png
@@ -772,44 +822,30 @@ No additional configuration needed.
 ### Multi-Column Layouts Applied:
 
 **1. Two routing field images (side-by-side):**
+
 ```mdx
 <MultiColumn ratio="equal" gap="md">
-  <div slot="left">
-    ![](~/assets/images/extensions/advanced-round-robin/03-routing-fields.png)
-  </div>
-  <div slot="right">
-    ![](~/assets/images/extensions/advanced-round-robin/04-field-setup.png)
-  </div>
+  <div slot="left">![](~/assets/images/extensions/advanced-round-robin/03-routing-fields.png)</div>
+  <div slot="right">![](~/assets/images/extensions/advanced-round-robin/04-field-setup.png)</div>
 </MultiColumn>
 ```
 
 **2. Image with instructions (side-by-side):**
+
 ```mdx
 <MultiColumn ratio="equal" gap="md">
-  <div slot="left">
-    ![](~/assets/images/extensions/advanced-round-robin/07-testing.png)
-  </div>
-  <div slot="right">
-    1. Set the Field Type to Multi-Select
-    2. Set a label
-    3. Add options (one by one)
-    4. Click Save
-  </div>
+  <div slot="left">![](~/assets/images/extensions/advanced-round-robin/07-testing.png)</div>
+  <div slot="right">1. Set the Field Type to Multi-Select 2. Set a label 3. Add options (one by one) 4. Click Save</div>
 </MultiColumn>
 ```
 
 **3. Three agent form screenshots (side-by-side-by-side):**
+
 ```mdx
 <MultiColumn columns={3} gap="md">
-  <div slot="left">
-    ![](~/assets/images/extensions/advanced-round-robin/10-agent-form-1.png)
-  </div>
-  <div slot="center">
-    ![](~/assets/images/extensions/advanced-round-robin/11-agent-form-2.png)
-  </div>
-  <div slot="right">
-    ![](~/assets/images/extensions/advanced-round-robin/12-agent-form-3.png)
-  </div>
+  <div slot="left">![](~/assets/images/extensions/advanced-round-robin/10-agent-form-1.png)</div>
+  <div slot="center">![](~/assets/images/extensions/advanced-round-robin/11-agent-form-2.png)</div>
+  <div slot="right">![](~/assets/images/extensions/advanced-round-robin/12-agent-form-3.png)</div>
 </MultiColumn>
 ```
 

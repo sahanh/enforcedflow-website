@@ -45,15 +45,18 @@ describe('URL Redirects', () => {
           });
 
           // Check if it's a redirect
-          if (response.status === 301 || response.status === 308 || response.status === 302 || response.status === 307) {
+          if (
+            response.status === 301 ||
+            response.status === 308 ||
+            response.status === 302 ||
+            response.status === 307
+          ) {
             const location = response.headers.get('location');
             expect(location).toBeTruthy();
 
             // Verify redirect location matches expected path
             if (location) {
-              const redirectPath = location.startsWith('http')
-                ? new URL(location).pathname
-                : location;
+              const redirectPath = location.startsWith('http') ? new URL(location).pathname : location;
 
               expect(redirectPath).toBe(expectedPath);
             }
@@ -88,9 +91,7 @@ describe('URL Redirects', () => {
         expect(location).toBeTruthy();
 
         if (location) {
-          const redirectPath = location.startsWith('http')
-            ? new URL(location).pathname
-            : location;
+          const redirectPath = location.startsWith('http') ? new URL(location).pathname : location;
 
           expect(redirectPath).toBe(newPath);
         }

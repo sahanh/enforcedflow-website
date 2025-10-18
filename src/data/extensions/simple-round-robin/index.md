@@ -1,12 +1,12 @@
 ---
-title: "Simple Round Robin"
-description: "Basic sequential task distribution for straightforward team assignment rotation"
-icon: "🔄"
+title: 'Simple Round Robin'
+description: 'Basic sequential task distribution for straightforward team assignment rotation'
+icon: '🔄'
 setupGuides:
-  - label: "Zapier Setup Guide"
-    href: "/extensions/simple-round-robin/guides/zapier/setup"
-  - label: "API Guide"
-    href: "https://app.enforcedflow.com/docs/api#/paths/api-v1-round-robin-next/post"
+  - label: 'Zapier Setup Guide'
+    href: '/extensions/simple-round-robin/guides/zapier/setup'
+  - label: 'API Guide'
+    href: 'https://app.enforcedflow.com/docs/api#/paths/api-v1-round-robin-next/post'
 ---
 
 ## What is Simple Round Robin?
@@ -18,6 +18,7 @@ Think of it like dealing cards - each person gets one, then the next person, and
 ## When to Use Simple Round Robin
 
 ✅ **Use when:**
+
 - You need equal distribution across a team
 - All team members have similar skills/capacity
 - Assignment logic is straightforward
@@ -25,6 +26,7 @@ Think of it like dealing cards - each person gets one, then the next person, and
 - Team size is consistent
 
 ❌ **Don't use when:**
+
 - Team members have different skill sets (use [Advanced Round Robin](/extensions/round-robin))
 - You need time-based or weighted assignment
 - Priority affects who should receive tasks
@@ -33,19 +35,25 @@ Think of it like dealing cards - each person gets one, then the next person, and
 ## Key Features
 
 ### Sequential Rotation
+
 Simple, predictable assignment:
+
 - Person A → Person B → Person C → Person A...
 - Maintains state across assignments
 - No complex rules or conditions
 
 ### Equal Distribution
+
 Everyone gets the same share:
+
 - Fair workload across team
 - No bias in assignment
 - Transparent and predictable
 
 ### Quick Setup
+
 Get started in minutes:
+
 - Define your team list
 - Add to Zapier workflow
 - Start distributing
@@ -53,21 +61,25 @@ Get started in minutes:
 ## Common Use Cases
 
 **Support Ticket Distribution**
+
 - Small support team (3-5 people)
 - Similar skill levels
 - Equal availability
 
 **Form Lead Assignment**
+
 - Sales team of equal capacity
 - No territory or specialization
 - Simple fair distribution
 
 **Task Rotation**
+
 - Team standups or duties
 - On-call rotation
 - Meeting note-taking assignments
 
 **Email Assignment**
+
 - Shared inbox distribution
 - Customer inquiry routing
 - General request handling
@@ -84,11 +96,13 @@ The extension tracks position in the rotation automatically, so you never have t
 ## Comparison: Simple vs Advanced
 
 **Choose Simple Round Robin if:**
+
 - All team members are interchangeable
 - No special rules needed
 - Quick setup is priority
 
 **Choose [Advanced Round Robin](/extensions/round-robin) if:**
+
 - Skills/expertise vary
 - Need time-based assignment
 - Require weighted distribution

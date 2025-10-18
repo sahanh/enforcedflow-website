@@ -18,13 +18,13 @@ The `MultiColumn` component provides a flexible way to organize rich text conten
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `columns` | `2` \| `3` | `2` | Number of columns to display |
-| `ratio` | `'equal'` \| `'left-wide'` \| `'right-wide'` | `'equal'` | Column width distribution (2 columns only) |
-| `gap` | `'sm'` \| `'md'` \| `'lg'` \| `'xl'` | `'md'` | Spacing between columns |
-| `breakpoint` | `'sm'` \| `'md'` \| `'lg'` | `'md'` | Responsive breakpoint for stacking |
-| `class` | `string` | `undefined` | Additional CSS classes |
+| Prop         | Type                                         | Default     | Description                                |
+| ------------ | -------------------------------------------- | ----------- | ------------------------------------------ |
+| `columns`    | `2` \| `3`                                   | `2`         | Number of columns to display               |
+| `ratio`      | `'equal'` \| `'left-wide'` \| `'right-wide'` | `'equal'`   | Column width distribution (2 columns only) |
+| `gap`        | `'sm'` \| `'md'` \| `'lg'` \| `'xl'`         | `'md'`      | Spacing between columns                    |
+| `breakpoint` | `'sm'` \| `'md'` \| `'lg'`                   | `'md'`      | Responsive breakpoint for stacking         |
+| `class`      | `string`                                     | `undefined` | Additional CSS classes                     |
 
 ### Gap Sizes
 
@@ -47,8 +47,8 @@ Import the component at the top of your MDX file:
 
 ```mdx
 ---
-title: "Your Page Title"
-description: "Your description"
+title: 'Your Page Title'
+description: 'Your description'
 ---
 
 import MultiColumn from '~/components/ui/MultiColumn.astro';
@@ -60,12 +60,14 @@ import MultiColumn from '~/components/ui/MultiColumn.astro';
     ### Left Column
 
     Your left column content here.
+
   </div>
 
   <div slot="right">
     ### Right Column
 
     Your right column content here.
+
   </div>
 </MultiColumn>
 ```
@@ -127,6 +129,7 @@ Great for main content with sidebar:
 
     This is your primary content area with more space.
     Perfect for detailed explanations, documentation, or articles.
+
   </div>
 
   <div slot="right">
@@ -135,6 +138,7 @@ Great for main content with sidebar:
     - Tip 1
     - Tip 2
     - Related links
+
   </div>
 </MultiColumn>
 ```
@@ -151,12 +155,14 @@ Useful when emphasizing right-side content:
     - 100+ users
     - 99% uptime
     - 24/7 support
+
   </div>
 
   <div slot="right">
     ### Detailed Description
 
     Your main content goes here with more emphasis and space.
+
   </div>
 </MultiColumn>
 ```
@@ -187,6 +193,7 @@ Equal width columns for presenting multiple related items:
     Content for the first column.
     - Point 1
     - Point 2
+
   </div>
 
   <div slot="center">
@@ -195,6 +202,7 @@ Equal width columns for presenting multiple related items:
     Content for the second column.
     - Point 1
     - Point 2
+
   </div>
 
   <div slot="right">
@@ -203,6 +211,7 @@ Equal width columns for presenting multiple related items:
     Content for the third column.
     - Point 1
     - Point 2
+
   </div>
 </MultiColumn>
 ```
@@ -221,12 +230,14 @@ Equal width columns for presenting multiple related items:
     \`\`\`javascript
     const example = "code";
     \`\`\`
+
   </div>
 
   <div slot="right">
     ### Explanation
 
     This code demonstrates...
+
   </div>
 </MultiColumn>
 ```
@@ -241,6 +252,7 @@ Equal width columns for presenting multiple related items:
     - Manual process
     - Time consuming
     - Error prone
+
   </div>
 
   <div slot="right">
@@ -249,6 +261,7 @@ Equal width columns for presenting multiple related items:
     - Automated
     - Fast
     - Reliable
+
   </div>
 </MultiColumn>
 ```
@@ -263,6 +276,7 @@ Equal width columns for presenting multiple related items:
     1. First step...
     2. Second step...
     3. Third step...
+
   </div>
 
   <div slot="right">
@@ -274,6 +288,7 @@ Equal width columns for presenting multiple related items:
     ### Need Help?
 
     Contact support
+
   </div>
 </MultiColumn>
 ```

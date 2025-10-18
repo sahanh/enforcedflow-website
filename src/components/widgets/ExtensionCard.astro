@@ -18,12 +18,16 @@ const hasZapierGuide = extensionGuides.some(
 );
 ---
 
-<div class={`bg-white dark:bg-slate-900 rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow flex flex-col h-full ${className}`}>
-  {icon && (
-    <div class="mb-4">
-      <span class="text-4xl">{icon}</span>
-    </div>
-  )}
+<div
+  class={`bg-white dark:bg-slate-900 rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow flex flex-col h-full ${className}`}
+>
+  {
+    icon && (
+      <div class="mb-4">
+        <span class="text-4xl">{icon}</span>
+      </div>
+    )
+  }
 
   <h3 class="text-2xl font-bold font-heading mb-3">
     {title}
@@ -34,20 +38,22 @@ const hasZapierGuide = extensionGuides.some(
   </p>
 
   <div class="mt-6">
-    {hasZapierGuide ? (
-      <a
-        href={`/extensions/${extensionSlug}/guides/zapier/setup`}
-        class="inline-block px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors"
-      >
-        Zapier Guide
-      </a>
-    ) : (
-      <a
-        href={`/extensions/${extensionSlug}`}
-        class="inline-block px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors"
-      >
-        Learn More
-      </a>
-    )}
+    {
+      hasZapierGuide ? (
+        <a
+          href={`/extensions/${extensionSlug}/guides/zapier/setup`}
+          class="inline-block px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors"
+        >
+          Zapier Guide
+        </a>
+      ) : (
+        <a
+          href={`/extensions/${extensionSlug}`}
+          class="inline-block px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors"
+        >
+          Learn More
+        </a>
+      )
+    }
   </div>
 </div>
