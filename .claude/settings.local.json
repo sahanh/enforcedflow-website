@@ -7,7 +7,9 @@
       "Bash(curl:*)",
       "Read(//private/tmp/**)",
       "Read(//Users/sahan/Downloads/**)",
-      "Bash(npm run check)"
+      "Bash(npm run check)",
+      "WebSearch",
+      "WebFetch(domain:starlight.astro.build)"
     ],
     "deny": [],
     "ask": []
