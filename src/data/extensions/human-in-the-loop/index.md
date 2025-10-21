@@ -47,6 +47,12 @@ Ready to add human oversight to your automations?
 - **[Set up in Zapier →](/guides/zapier/human-in-the-loop)** - Complete implementation guide
 - **[View API Docs →](#)** - For custom integrations
 
+## Use Cases & Examples
+
+See Human-in-the-Loop in action with these real-world automation examples:
+
+- **[Google Business Profile Review Automation →](/extensions/human-in-the-loop/use-cases/zapier/google-business-review-automation)** - Automatically generate and approve AI responses to customer reviews
+
 ## Other Extensions
 
 - **[Round Robin](/extensions/round-robin)** - Distribute review tasks across team

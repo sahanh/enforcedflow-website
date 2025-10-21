@@ -1,0 +1,477 @@
+---
+title: 'AI-Powered Google Business Profile Review Automation with Human Approval'
+description: 'Automatically generate AI responses to Google Business reviews and route them through human approval before posting'
+platform: 'zapier'
+extension: 'human-in-the-loop'
+---
+
+import MultiColumn from '~/components/ui/MultiColumn.astro';
+
+This guide demonstrates how to build an intelligent Google Business Profile review automation that:
+
+1. Automatically generates AI-powered responses to new reviews
+2. Routes responses through a human approval workflow
+3. Posts approved responses back to Google Business Profile
+
+This ensures your business maintains consistent, brand-appropriate responses while leveraging AI to save time.
+
+## Why This Automation Matters
+
+Responding to Google Business reviews is crucial for:
+- **Customer engagement** - Shows you value customer feedback
+- **Local SEO** - Review responses improve search rankings
+- **Brand reputation** - Demonstrates professionalism and care
+
+However, manually crafting responses is time-consuming, and fully automated AI responses risk being off-brand or inappropriate. This automation strikes the perfect balance: AI efficiency with human oversight.
+
+## How It Works
+
+This automation requires **two Zaps** working together:
+
+**Zap 1: Generate and Submit for Approval**
+1. Triggers when a new review is posted to your Google Business Profile
+2. Uses AI (OpenAI) to generate a response based on the review
+3. Creates a Human-in-the-Loop task for review and approval
+4. Sends an email notification with the review link
+
+**Zap 2: Post Approved Responses**
+1. Triggers when a Human-in-the-Loop task is reviewed
+2. Filters to only process approved responses
+3. Posts the approved response to Google Business Profile
+
+## Prerequisites
+
+Before you begin, ensure you have:
+
+- A Zapier account with access to:
+  - Google Business Profile integration
+  - AI by Zapier (or OpenAI)
+  - Email by Zapier
+- An EnforcedFlow account ([sign up here](https://app.enforcedflow.com))
+- Your Google Business Profile connected to Zapier
+- An OpenAI API key (if using OpenAI directly)
+
+## Part 1: Building the Review Response Generator (Zap 1)
+
+### Step 1: Set Up the Google Business Profile Trigger
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    Create a new Zap and select **Google Business Profile** as your trigger app.
+
+    Choose **New Review** as the trigger event. This will fire whenever someone leaves a review on your Google Business Profile.
+
+    **Configuration:**
+
+    1. **App**: Google Business Profile
+    2. **Trigger event**: New Review
+    3. **Account**: Connect your Google Business Profile account
+
+    Test the trigger to ensure it's working correctly and pulling in review data.
+
+  </div>
+
+  <div slot="right">
+    ![Google Business Profile trigger setup with New Review event selected](~/assets/images/extensions/human-in-the-loop/use-cases/google-business-review/00-zap1-gbp-trigger-setup.png)
+  </div>
+</MultiColumn>
+
+### Step 2: Configure AI Response Generation
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    Add **AI by Zapier** as your next action step.
+
+    Select **Analyze and Return Data** as the action event.
+
+    **Configuration:**
+
+    1. **Provider**: OpenAI
+    2. **Model**: openai/gpt-4o-mini (cost-effective and fast)
+    3. **Input fields**: Map the review comment from Step 1
+    4. **Prompt**: Craft instructions for generating responses
+
+    **Example prompt:**
+    ```
+    Come up with a reply to the given review in under 200 characters.
+    If any issues are mentioned, state that we're actively working to
+    resolve them. Thank the reviewer for their feedback.
+    ```
+
+    5. **Output fields**: Create a field called "reply"
+    6. **Return as array**: Set to False
+
+  </div>
+
+  <div slot="right">
+    ![AI step configuration showing OpenAI settings and prompt](~/assets/images/extensions/human-in-the-loop/use-cases/google-business-review/01-zap1-ai-step-configure.png)
+  </div>
+</MultiColumn>
+
+**Pro Tips for Your AI Prompt:**
+- Keep character limits realistic (Google has a 4,096 character limit, but shorter is better)
+- Include brand voice guidelines ("friendly and professional" or "casual and warm")
+- Specify how to handle negative reviews
+- Mention any required elements (acknowledgment, gratitude, call-to-action)
+
+### Step 3: Create Human-in-the-Loop Task
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    Add **EnforcedFlow** as your next action step.
+
+    Select **Create Human in the Loop Task** as the action event.
+
+    Connect your EnforcedFlow account when prompted.
+
+  </div>
+
+  <div slot="right">
+    ![EnforcedFlow action setup](~/assets/images/extensions/human-in-the-loop/use-cases/google-business-review/02-zap1-hil-step-setup.png)
+  </div>
+</MultiColumn>
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    **Configure the review task:**
+
+    1. **Title**: "Google Business Review"
+       - This appears at the top of the review interface
+
+    2. **Review Guidelines**: "Make sure response match tone of our branding"
+       - Gives reviewers context on what to check
+
+    3. **Content to Review**: Map the AI-generated reply from Step 2
+       - This is what the reviewer can edit and approve
+
+    4. **Source Content (Reference for Reviewer)**: Map the original review comment
+       - Provides context so reviewers understand what they're responding to
+
+    5. **Metadata**: Add these key-value pairs:
+       - **ReviewerName**: Map the reviewer's name from Step 1
+       - **Rating**: Map the star rating from Step 1
+       - This data passes through and will be available in Zap 2
+
+    6. **Allow metadata to be edited**: Set to False
+       - Reviewers don't need to change the rating or reviewer name
+
+    7. **Group Name**: "business-review"
+       - Critical! This connects Zap 1 to Zap 2
+
+  </div>
+
+  <div slot="right">
+    ![Human-in-the-Loop task configuration with all fields filled](~/assets/images/extensions/human-in-the-loop/use-cases/google-business-review/03-zap1-hil-step-configure.png)
+  </div>
+</MultiColumn>
+
+**Why Group Name Matters:**
+
+The Group Name acts as a unique identifier that links your two Zaps together. When Zap 2's trigger listens for reviewed tasks, it will ONLY pick up tasks from this group. This prevents cross-contamination if you have multiple review workflows.
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    **Test the step** to verify it works correctly.
+
+    The output will include:
+    - **Data**: A unique review URL (https://app.enforcedflow.com/humanloop/review/...)
+    - **Task ID**: A unique identifier for tracking
+
+    Copy this review URL - you'll need it in the next step.
+
+  </div>
+
+  <div slot="right">
+    ![Test output showing the review URL and task ID](~/assets/images/extensions/human-in-the-loop/use-cases/google-business-review/04-zap1-hil-step-test.png)
+  </div>
+</MultiColumn>
+
+### Step 4: Send Review Link to Approver
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    Add **Email by Zapier** as your final action step.
+
+    Select **Send Outbound Email** as the action event.
+
+    **Configure the email:**
+
+    1. **To**: Enter the email address(es) of your reviewer(s)
+       - You can add multiple emails separated by commas
+       - Consider using a team email or Slack integration
+
+    2. **Subject**: "New Business Profile Review"
+       - Keep it clear and actionable
+
+    3. **Body**: Include the review link from Step 3
+       - Example: `Review - {{3. Data}}`
+       - This creates a clickable link to the review interface
+
+    **Alternative notification methods:**
+    - Send to Slack instead of email
+    - Create a task in ClickUp or Asana
+    - Add to a shared Google Sheet
+
+  </div>
+
+  <div slot="right">
+    ![Email configuration with review link in body](~/assets/images/extensions/human-in-the-loop/use-cases/google-business-review/06-zap1-email-step.png)
+  </div>
+</MultiColumn>
+
+### Your Complete Zap 1 Should Look Like This:
+
+<div style="display: flex; justify-content: center; width: 100%;">
+  <div style="width: 60%;">
+
+![Complete overview of Zap 1 with all four steps](~/assets/images/extensions/human-in-the-loop/use-cases/google-business-review/07-zap1-overview.png)
+
+  </div>
+</div>
+
+1. Google Business Profile - New Review
+2. AI by Zapier - Analyze and Return Data
+3. EnforcedFlow - Create Human in the Loop Task
+4. Email by Zapier - Send Outbound Email
+
+**Turn on your Zap** once you've tested it successfully.
+
+## The Review Experience
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    When your reviewer clicks the link from the email, they'll see a clean, focused interface showing:
+
+    1. **The title and guidelines** you configured
+    2. **The original review** for context
+    3. **The AI-generated response** (fully editable)
+    4. **An AI assistant** to quickly refine the content
+    5. **Action buttons**: Start Over, Reject, or Approve
+
+    **The AI Refinement Feature:**
+
+    Instead of manually editing, reviewers can use the "Ask AI to tweak the content" feature to quickly adjust the response. For example:
+    - "Make it shorter"
+    - "Add more enthusiasm"
+    - "Change tone to professional"
+    - "Remove emojis"
+
+    This speeds up the review process significantly.
+
+  </div>
+
+  <div slot="right">
+    ![Review interface showing the AI-generated response with editing options](~/assets/images/extensions/human-in-the-loop/use-cases/google-business-review/05-review-interface.png)
+  </div>
+</MultiColumn>
+
+## Part 2: Building the Response Posting Automation (Zap 2)
+
+Now we'll create the second Zap that listens for approved reviews and posts them to Google Business Profile.
+
+### Step 1: Set Up EnforcedFlow Trigger
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    Create a new Zap and select **EnforcedFlow** as your trigger app.
+
+    Choose **Human in Loop Task Reviewed** as the trigger event.
+
+    Connect your EnforcedFlow account (same account as Zap 1).
+
+  </div>
+
+  <div slot="right">
+    ![EnforcedFlow trigger setup](~/assets/images/extensions/human-in-the-loop/use-cases/google-business-review/09-zap2-trigger-hil-setup.png)
+  </div>
+</MultiColumn>
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    **Configure the trigger:**
+
+    **Group Name**: "business-review"
+
+    This MUST match exactly what you used in Zap 1, Step 3. This ensures this Zap only processes Google Business review tasks, not other types of tasks you might have.
+
+  </div>
+
+  <div slot="right">
+    ![Group name configuration matching Zap 1](~/assets/images/extensions/human-in-the-loop/use-cases/google-business-review/10-zap2-trigger-group-name.png)
+  </div>
+</MultiColumn>
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    **Test the trigger** to pull in a sample reviewed task.
+
+    The trigger will return rich data including:
+
+    - **ID**: Task identifier
+    - **Title**: "Google Business Review"
+    - **Notes**: Your review guidelines
+    - **Source Content**: The original review
+    - **Original Content**: The AI's initial response
+    - **Approved Content**: The final approved response (this is what we'll post!)
+    - **Review Outcome**: "approved" or "rejected"
+    - **Metadata**: ReviewerName, Rating, and other data you passed through
+
+    This data gives you everything you need to post the response.
+
+  </div>
+
+  <div slot="right">
+    ![Test data showing all the information returned by the trigger](~/assets/images/extensions/human-in-the-loop/use-cases/google-business-review/11-zap2-trigger-test.png)
+  </div>
+</MultiColumn>
+
+### Step 2: Filter for Approved Responses Only
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    Add a **Filter by Zapier** step.
+
+    **Configure the filter:**
+
+    **Only continue if:**
+    - Field: `1. Review Outcome`
+    - Condition: `(Text) Exactly matches`
+    - Value: `approved`
+
+    This ensures rejected reviews don't get posted. You could also create a separate automation to handle rejections (e.g., notify a manager or create a follow-up task).
+
+    Test the filter to ensure it passes with "approved" outcomes.
+
+  </div>
+
+  <div slot="right">
+    ![Filter configuration checking for approved outcome](~/assets/images/extensions/human-in-the-loop/use-cases/google-business-review/12-zap2-filter-step.png)
+  </div>
+</MultiColumn>
+
+### Step 3: Post Response to Google Business Profile
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    Add **Google Business Profile** as your action step.
+
+    Select **Create Reply** as the action event.
+
+    Connect your Google Business Profile account (same as Zap 1).
+
+  </div>
+
+  <div slot="right">
+    ![Google Business Profile action setup](~/assets/images/extensions/human-in-the-loop/use-cases/google-business-review/13-zap2-reply-setup.png)
+  </div>
+</MultiColumn>
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    **Configure the reply:**
+
+    1. **Review Name**: Map `1. Metadata Reviewer Name` from the trigger
+       - This is the unique identifier for the review in Google's system
+
+    2. **Your Reply**: Map `1. Approved Content` from the trigger
+       - This contains the final, human-approved response text
+
+    Test this step to ensure the reply posts correctly.
+
+  </div>
+
+  <div slot="right">
+    ![Reply configuration mapping approved content](~/assets/images/extensions/human-in-the-loop/use-cases/google-business-review/14-zap2-reply-configure.png)
+  </div>
+</MultiColumn>
+
+**Turn on your Zap** once testing is successful.
+
+## Testing Your Complete Automation
+
+Here's how to test the end-to-end workflow:
+
+1. **Create a test review** on your Google Business Profile (or wait for a real one)
+2. **Verify Zap 1 triggers** and check your email for the review link
+3. **Open the review link** and approve or edit the response
+4. **Check Google Business Profile** to see if the response appears
+
+**Troubleshooting Common Issues:**
+
+- **Zap 2 not triggering**: Verify the Group Name matches exactly in both Zaps
+- **Wrong response posted**: Check that you're mapping "Approved Content" not "Original Content"
+- **AI responses off-brand**: Refine your prompt in Step 2 of Zap 1
+- **Review link not working**: Ensure your EnforcedFlow account is active
+
+## Best Practices
+
+**1. Craft a Strong AI Prompt**
+- Include specific brand voice guidelines
+- Set character limits appropriate for reviews
+- Specify how to handle negative vs positive reviews
+- Include examples if possible
+
+**2. Set Clear Review Guidelines**
+- Tell reviewers what to look for (tone, accuracy, length)
+- Provide examples of good vs bad responses
+- Create a brand voice guide for reference
+
+**3. Monitor and Iterate**
+- Track how often reviewers edit AI responses
+- Refine your AI prompt based on common edits
+- Monitor response times and approval rates
+
+**4. Handle Rejections**
+- Consider creating a third Zap to handle rejected reviews
+- Send rejections to a manager for review
+- Create a follow-up task to manually craft a response
+
+**5. Scale Your Workflow**
+- Add multiple reviewers to the email distribution
+- Use Slack instead of email for faster notifications
+- Batch review multiple tasks at once using EnforcedFlow's batch feature
+
+## Advanced Customization Ideas
+
+Once you have the basic automation working, consider these enhancements:
+
+**1. Sentiment-Based Routing**
+- Add a sentiment analysis step
+- Route negative reviews to senior staff
+- Auto-approve very positive, simple reviews
+
+**2. Response Templates**
+- Create different AI prompts for different star ratings
+- Use Zapier Paths to route to different prompts
+
+**3. Performance Tracking**
+- Log all reviews and responses to a Google Sheet
+- Track approval rates and response times
+- Monitor which AI responses get edited most
+
+**4. Multi-Location Support**
+- Add location as metadata
+- Route reviews to location-specific managers
+- Use location-specific brand voice in prompts
+
+## Conclusion
+
+You now have a powerful automation that:
+- Saves hours of manual response writing
+- Maintains brand consistency through human oversight
+- Ensures timely responses to all reviews
+- Scales effortlessly as review volume grows
+
+This Human-in-the-Loop approach gives you the best of both worlds: AI efficiency with human judgment.
+
+## Need Help?
+
+- **[View EnforcedFlow Documentation](/extensions/human-in-the-loop)**
+- **[Contact Support](https://app.enforcedflow.com/support)**
+- **[Join our Community](#)**
+
+## Related Resources
+
+- [Human-in-the-Loop Setup Guide](/extensions/human-in-the-loop/guides/zapier/setup)
+- [Understanding Group Names in Human-in-the-Loop](/extensions/human-in-the-loop/guides/zapier/setup#group-name)
+- [API Documentation](https://app.enforcedflow.com/docs/api)

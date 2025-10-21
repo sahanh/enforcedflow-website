@@ -114,9 +114,23 @@ const extensionGuidesCollection = defineCollection({
   }),
 });
 
+// Extension-specific use cases (extensions/{ext}/use-cases/{platform}/)
+const extensionUseCasesCollection = defineCollection({
+  loader: glob({ pattern: ['**/use-cases/**/*.md', '**/use-cases/**/*.mdx'], base: 'src/data/extensions' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    platform: z.enum(['zapier', 'make', 'n8n']),
+    extension: z.string(), // Links to extension slug
+    draft: z.boolean().optional(),
+    metadata: metadataDefinition(),
+  }),
+});
+
 export const collections = {
   post: postCollection,
   extensions: extensionsCollection,
   guides: guidesCollection,
   extensionGuides: extensionGuidesCollection,
+  extensionUseCases: extensionUseCasesCollection,
 };
