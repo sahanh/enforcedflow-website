@@ -18,6 +18,7 @@ This ensures your business maintains consistent, brand-appropriate responses whi
 ## Why This Automation Matters
 
 Responding to Google Business reviews is crucial for:
+
 - **Customer engagement** - Shows you value customer feedback
 - **Local SEO** - Review responses improve search rankings
 - **Brand reputation** - Demonstrates professionalism and care
@@ -29,12 +30,14 @@ However, manually crafting responses is time-consuming, and fully automated AI r
 This automation requires **two Zaps** working together:
 
 **Zap 1: Generate and Submit for Approval**
+
 1. Triggers when a new review is posted to your Google Business Profile
 2. Uses AI (OpenAI) to generate a response based on the review
 3. Creates a Human-in-the-Loop task for review and approval
 4. Sends an email notification with the review link
 
 **Zap 2: Post Approved Responses**
+
 1. Triggers when a Human-in-the-Loop task is reviewed
 2. Filters to only process approved responses
 3. Posts the approved response to Google Business Profile
@@ -109,6 +112,7 @@ Before you begin, ensure you have:
 </MultiColumn>
 
 **Pro Tips for Your AI Prompt:**
+
 - Keep character limits realistic (Google has a 4,096 character limit, but shorter is better)
 - Include brand voice guidelines ("friendly and professional" or "casual and warm")
 - Specify how to handle negative reviews
@@ -408,15 +412,18 @@ Here's how to test the end-to-end workflow:
 Once you have the basic automation working, consider these enhancements:
 
 **1. Sentiment-Based Routing**
+
 - Add a sentiment analysis step
 - Route negative reviews to senior staff
 - Auto-approve very positive, simple reviews
 
 **2. Response Templates**
+
 - Create different AI prompts for different star ratings
 - Use Zapier Paths to route to different prompts
 
 **3. Multi-Location Support**
+
 - Add location as metadata
 - Route reviews to location-specific managers
 - Use location-specific brand voice in prompts
