@@ -9,7 +9,9 @@
       "Read(//Users/sahan/Downloads/**)",
       "Bash(npm run check)",
       "WebSearch",
-      "WebFetch(domain:starlight.astro.build)"
+      "WebFetch(domain:starlight.astro.build)",
+      "Bash(npm run build)",
+      "Read(//Users/sahan/Desktop/**)"
     ],
     "deny": [],
     "ask": []
