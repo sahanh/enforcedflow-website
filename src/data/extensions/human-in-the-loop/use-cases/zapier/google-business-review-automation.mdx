@@ -169,12 +169,39 @@ The Group Name acts as a unique identifier that links your two Zaps together. Wh
   <div slot="left">
     **Run Test** to verify the step is working. This will return a review URL as shown in the screenshot.
 
-    **Important:** After running the test, open the review URL and approve the sample task. This creates the sample data you'll need when setting up Zap 2's trigger in the next part of this guide.
-
   </div>
 
   <div slot="right">
     ![Test output showing the review URL and task ID](~/assets/images/extensions/human-in-the-loop/use-cases/google-business-review/04-zap1-hil-step-test.png)
+  </div>
+</MultiColumn>
+
+**What you'll see when you open the review URL:**
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    When you click the review URL from the test output, you'll see a clean, focused interface showing:
+
+    1. **The title and guidelines** you configured
+    2. **The original review** for context
+    3. **The AI-generated response** (fully editable)
+    4. **An AI assistant** to quickly refine the content
+    5. **Action buttons**: Start Over, Reject, or Approve
+
+    **Using the AI Refinement Feature:**
+
+    Instead of manually editing, you can use the "Ask AI to tweak the content" feature to quickly adjust the response. For example:
+    - "Make it shorter"
+    - "Add more enthusiasm"
+    - "Change tone to professional"
+    - "Remove emojis"
+
+    **For this test, click Approve** to create the sample data you'll need when setting up Zap 2's trigger in the next part of this guide.
+
+  </div>
+
+  <div slot="right">
+    ![Review interface showing the AI-generated response with editing options](~/assets/images/extensions/human-in-the-loop/use-cases/google-business-review/05-review-interface.png)
   </div>
 </MultiColumn>
 
@@ -222,35 +249,6 @@ The Group Name acts as a unique identifier that links your two Zaps together. Wh
 **Before turning on Zap 1:** Make sure you've approved the test review task from Step 3. This sample data is necessary for setting up Zap 2 in the next section.
 
 **Turn on your Zap** once you've tested it successfully.
-
-## The Review Experience
-
-<MultiColumn ratio="equal" gap="md">
-  <div slot="left">
-    When your reviewer clicks the link from the email, they'll see a clean, focused interface showing:
-
-    1. **The title and guidelines** you configured
-    2. **The original review** for context
-    3. **The AI-generated response** (fully editable)
-    4. **An AI assistant** to quickly refine the content
-    5. **Action buttons**: Start Over, Reject, or Approve
-
-    **The AI Refinement Feature:**
-
-    Instead of manually editing, reviewers can use the "Ask AI to tweak the content" feature to quickly adjust the response. For example:
-    - "Make it shorter"
-    - "Add more enthusiasm"
-    - "Change tone to professional"
-    - "Remove emojis"
-
-    This speeds up the review process significantly.
-
-  </div>
-
-  <div slot="right">
-    ![Review interface showing the AI-generated response with editing options](~/assets/images/extensions/human-in-the-loop/use-cases/google-business-review/05-review-interface.png)
-  </div>
-</MultiColumn>
 
 ## Part 2: Building the Response Posting Automation (Zap 2)
 
