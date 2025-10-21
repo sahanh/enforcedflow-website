@@ -32,7 +32,7 @@ This automation requires **two Zaps** working together:
 **Zap 1: Generate and Submit for Approval**
 
 1. Triggers when a new review is posted to your Google Business Profile
-2. Uses AI (OpenAI) to generate a response based on the review
+2. Uses AI to generate a response based on the review
 3. Creates a Human-in-the-Loop task for review and approval
 4. Sends an email notification with the review link
 
@@ -111,13 +111,6 @@ Before you begin, ensure you have:
   </div>
 </MultiColumn>
 
-**Pro Tips for Your AI Prompt:**
-
-- Keep character limits realistic (Google has a 4,096 character limit, but shorter is better)
-- Include brand voice guidelines ("friendly and professional" or "casual and warm")
-- Specify how to handle negative reviews
-- Mention any required elements (acknowledgment, gratitude, call-to-action)
-
 ### Step 3: Create Human-in-the-Loop Task
 
 <MultiColumn ratio="equal" gap="md">
@@ -157,7 +150,6 @@ Before you begin, ensure you have:
        - This data passes through and will be available in Zap 2
 
     6. **Allow metadata to be edited**: Set to False
-       - Reviewers don't need to change the rating or reviewer name
 
     7. **Group Name**: "business-review"
        - Critical! This connects Zap 1 to Zap 2
@@ -197,15 +189,8 @@ The Group Name acts as a unique identifier that links your two Zaps together. Wh
     **Configure the email:**
 
     1. **To**: Enter the email address(es) of your reviewer(s)
-       - You can add multiple emails separated by commas
-       - Consider using a team email or Slack integration
-
     2. **Subject**: "New Business Profile Review"
-       - Keep it clear and actionable
-
     3. **Body**: Include the review link from Step 3
-       - Example: `Review - {{3. Data}}`
-       - This creates a clickable link to the review interface
 
     **Alternative notification methods:**
     - Send to Slack instead of email
