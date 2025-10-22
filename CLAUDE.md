@@ -1,1 +1,1 @@
-- execute npm run check after each commit
+- execute npm run check after completing a git each commit
