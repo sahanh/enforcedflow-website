@@ -6,6 +6,8 @@ image: '/images/extensions/human-in-the-loop/hil-featured-image.png'
 setupGuides:
   - label: 'Zapier Setup Guide'
     href: '/extensions/human-in-the-loop/guides/zapier/setup'
+  - label: 'Make Setup Guide'
+    href: '/extensions/human-in-the-loop/guides/make/setup'
   - label: 'API Guide'
     href: 'https://app.enforcedflow.com/docs/api#/paths/api-v1-human-in-the-loop-tasks/post'
 ---

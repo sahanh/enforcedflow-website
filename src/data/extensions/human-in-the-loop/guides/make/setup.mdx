@@ -17,11 +17,49 @@ For example, take a Make scenario that generates a personalized article using Op
 
 To setup a workflow similar to above leveraging human in the loop extension you will need to setup two scenarios. One to generate the content and send it for approval, another one to handle the approved content and take the next action. It's straightforward to setup.
 
+## Prerequisites: Install the EnforcedFlow extension
+
+Before you can use EnforcedFlow in your Make scenarios, you need to install the extension into your Make account. The EnforcedFlow extension is currently invite-only.
+
+<a href="https://eu1.make.com/app/invite/74d3fabd23d706b75d120557c34b9dde" target="_blank">
+  View in Make Marketplace
+</a>
+
+### Step 1: Click Install
+
+Visit the extension link above and click the **Install** button to begin the installation process.
+
+![EnforcedFlow in Make Marketplace](~/assets/images/extensions/human-in-the-loop/make/00-install-button.png)
+
+### Step 2: Select your organization
+
+Select the organization where you want to install the EnforcedFlow extension and click **Install**.
+
+**Note**: You can only install apps in organizations where you have the Admin, Owner, or App Developer role.
+
+![Select organization for installation](~/assets/images/extensions/human-in-the-loop/make/00-select-organization.png)
+
+Once installed, the EnforcedFlow extension will be available in all your scenarios within that organization.
+
 ## Getting started
 
 ### Scenario 1: Generate content and send for human review
 
 This first scenario will generate content using AI and create a review task for a human to approve or reject.
+
+#### Scenario 1 Overview
+
+Here's what the complete first scenario looks like:
+
+![Complete scenario 1 overview](~/assets/images/extensions/human-in-the-loop/make/07-scenario-1-overview.png)
+
+1. OpenAI generates content based on your prompt
+2. EnforcedFlow creates a review task with that content
+3. Email sends the review URL to the reviewer
+
+When the reviewer visits the URL, they'll see an editable interface where they can modify the content and approve or reject it.
+
+![The review page seen by the reviewer](~/assets/images/extensions/human-in-the-loop/05-review-page.png)
 
 #### Step 1: Add a module to generate content
 
@@ -46,7 +84,7 @@ This first scenario will generate content using AI and create a review task for 
 
     1. Click **Add** to create a new connection
     2. Enter a connection name
-    3. Enter your EnforcedFlow API Key ([Register to get your free API key](https://app.enforcedflow.com))
+    3. Enter your EnforcedFlow API Key (<a href="https://app.enforcedflow.com/register?provider=Make" target="_blank">Register to get your free API key</a>)
     4. Click **Save**
 
   </div>
@@ -111,23 +149,19 @@ This first scenario will generate content using AI and create a review task for 
   </div>
 </MultiColumn>
 
-#### Scenario 1 Overview
-
-Here's what the complete first scenario looks like:
-
-![Complete scenario 1 overview](~/assets/images/extensions/human-in-the-loop/make/07-scenario-1-overview.png)
-
-1. OpenAI generates content based on your prompt
-2. EnforcedFlow creates a review task with that content
-3. Email sends the review URL to the reviewer
-
-When the reviewer visits the URL, they'll see an editable interface where they can modify the content and approve or reject it.
-
-![The review page seen by the reviewer](~/assets/images/extensions/human-in-the-loop/05-review-page.png)
-
 ### Scenario 2: Handle reviewed content
 
 This second scenario will be triggered when a human completes their review, and will handle the approved content.
+
+#### Scenario 2 Overview
+
+Here's what the complete second scenario looks like:
+
+![Complete scenario 2 overview](~/assets/images/extensions/human-in-the-loop/make/11-scenario-2-overview.png)
+
+1. EnforcedFlow webhook triggers when a review is completed
+2. Filter checks if the review was approved
+3. WordPress creates a post with the approved content (only if approved)
 
 #### Step 1: Add the "Human in Loop Task Reviewed" trigger
 
@@ -194,16 +228,6 @@ When a review is completed, the trigger receives:
     ![WordPress module with approved content](~/assets/images/extensions/human-in-the-loop/make/10-wordpress-action.png)
   </div>
 </MultiColumn>
-
-#### Scenario 2 Overview
-
-Here's what the complete second scenario looks like:
-
-![Complete scenario 2 overview](~/assets/images/extensions/human-in-the-loop/make/11-scenario-2-overview.png)
-
-1. EnforcedFlow webhook triggers when a review is completed
-2. Filter checks if the review was approved
-3. WordPress creates a post with the approved content (only if approved)
 
 ## Summary
 
