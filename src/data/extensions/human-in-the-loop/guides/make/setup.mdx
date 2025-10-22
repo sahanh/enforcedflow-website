@@ -1,0 +1,215 @@
+---
+title: 'Human in the Loop for Make Automations'
+description: 'Add human review and approval steps to your AI-powered Make workflows'
+platform: 'make'
+extension: 'human-in-the-loop'
+---
+
+import MultiColumn from '~/components/ui/MultiColumn.astro';
+
+EnforcedFlow's Human in the Loop is targeted towards generative AI workflows. This extension lets a human review automatically generated output before continuing the process to ensure accuracy, compliance, and accountability in automated workflows.
+
+For example, take a Make scenario that generates a personalized article using OpenAI. With Human in The Loop, a human can review to make sure the content is correct or fine-tune it before publishing to WordPress.
+
+![](~/assets/images/extensions/human-in-the-loop/01-example-overview.png)
+
+## How it works
+
+To setup a workflow similar to above leveraging human in the loop extension you will need to setup two scenarios. One to generate the content and send it for approval, another one to handle the approved content and take the next action. It's straightforward to setup.
+
+## Getting started
+
+### Scenario 1: Generate content and send for human review
+
+This first scenario will generate content using AI and create a review task for a human to approve or reject.
+
+#### Step 1: Add a module to generate content
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    Start by adding a module that generates the content you want reviewed. In this example, we're using OpenAI to generate content.
+
+    Configure the module with your prompt and settings. The output from this module will be sent to the human reviewer.
+
+  </div>
+
+  <div slot="right">
+    ![OpenAI module configuration](~/assets/images/extensions/human-in-the-loop/make/01-openai-setup.png)
+  </div>
+</MultiColumn>
+
+#### Step 2: Connect to EnforcedFlow
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    Before you can use EnforcedFlow modules, you need to create a connection.
+
+    1. Click **Add** to create a new connection
+    2. Enter a connection name
+    3. Enter your EnforcedFlow API Key ([Register to get your free API key](https://app.enforcedflow.com))
+    4. Click **Save**
+
+  </div>
+
+  <div slot="right">
+    ![Creating EnforcedFlow API connection](~/assets/images/extensions/human-in-the-loop/make/02-api-key-connection.png)
+  </div>
+</MultiColumn>
+
+#### Step 3: Add the "Create Human in the Loop Task" module
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    Search for **EnforcedFlow** in the module directory and select **Create Human in the Loop Task** as the action.
+
+    This module will create a review task and return a unique URL that you can share with your reviewer.
+
+  </div>
+
+  <div slot="right">
+    ![Search for EnforcedFlow module](~/assets/images/extensions/human-in-the-loop/make/03-search-enforcedflow.png)
+  </div>
+</MultiColumn>
+
+#### Step 4: Configure the review task
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    The configuration options for the Human in Loop task are:
+
+    1. **Connection**: Select the EnforcedFlow connection you created earlier
+    2. **Title (Required)**: The title displayed at the top of the review page
+    3. **Content (Required)**: The actual content that needs to be reviewed and potentially edited. Map this to the output from your AI module (e.g., OpenAI's generated text)
+    4. **Source Content (Optional)**: Contextual information that helps the reviewer understand the background. For example, the original prompt or source material
+    5. **Notes (Optional)**: General instructions or guidelines for the reviewer (e.g., "Make sure content is accurate", "Match our brand tone")
+    6. **Group Name (Optional)**: A unique identifier to organize different types of review tasks. Use this when you have multiple review workflows and want to ensure each type only triggers its specific follow-up scenario
+    7. **Metadata (Optional)**: Custom key-value pairs that you want to pass through the workflow but don't need to show to the reviewer. This data will be returned in the "Human in Loop Task Reviewed" webhook
+
+    The module will output a **Review URL** that you can send to your reviewer.
+
+  </div>
+
+  <div slot="right">
+    ![Configuring the review task](~/assets/images/extensions/human-in-the-loop/make/04-task-configuration.png)
+  </div>
+</MultiColumn>
+
+#### Step 5: Send the review URL to your reviewer
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    Add an Email module (or any other notification method like Slack) to send the review URL to your reviewer.
+
+    1. Map the **Review URL** from the EnforcedFlow module output to the email content
+    2. Configure the recipient, subject, and any additional message
+    3. The reviewer will visit this URL to review and approve/reject the content
+
+  </div>
+
+  <div slot="right">
+    ![Email module sending review URL](~/assets/images/extensions/human-in-the-loop/make/06-email-setup.png)
+  </div>
+</MultiColumn>
+
+#### Scenario 1 Overview
+
+Here's what the complete first scenario looks like:
+
+![Complete scenario 1 overview](~/assets/images/extensions/human-in-the-loop/make/07-scenario-1-overview.png)
+
+1. OpenAI generates content based on your prompt
+2. EnforcedFlow creates a review task with that content
+3. Email sends the review URL to the reviewer
+
+When the reviewer visits the URL, they'll see an editable interface where they can modify the content and approve or reject it.
+
+![The review page seen by the reviewer](~/assets/images/extensions/human-in-the-loop/05-review-page.png)
+
+### Scenario 2: Handle reviewed content
+
+This second scenario will be triggered when a human completes their review, and will handle the approved content.
+
+#### Step 1: Add the "Human in Loop Task Reviewed" trigger
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    Create a new scenario and add the **EnforcedFlow** trigger module.
+
+    Select **Human in Loop Task Reviewed** as the trigger event.
+
+    1. **Choose a webhook**: Click **Add** to create a new webhook, or select an existing one
+    2. **Group Name (Optional)**: If you specified a group name in Scenario 1, enter the same group name here to only receive events from that specific group
+
+    The webhook will receive data whenever someone completes a review.
+
+  </div>
+
+  <div slot="right">
+    ![Setting up the review completion webhook](~/assets/images/extensions/human-in-the-loop/make/08-trigger-setup.png)
+  </div>
+</MultiColumn>
+
+**What data does the trigger receive?**
+
+When a review is completed, the trigger receives:
+
+1. **ID**: Task identifier (used by EnforcedFlow)
+2. **Title**: The title used to create the task
+3. **Original Content**: The content used in task creation
+4. **Approved Content**: The content after review (if unchanged, same as original)
+5. **Review Outcome**: Either "approved" or "rejected"
+6. **Metadata**: Any metadata key-value pairs you passed in Scenario 1
+7. **Group Name**: The group name if specified
+
+#### Step 2: Filter for approved reviews
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    Add a filter to ensure only approved reviews are processed.
+
+    Set the condition to check if **review_outcome** equals **approved**.
+
+    You can create a separate scenario to handle rejected reviews if needed.
+
+  </div>
+
+  <div slot="right">
+    ![Filter setup for approved reviews](~/assets/images/extensions/human-in-the-loop/make/09-filter-setup.png)
+  </div>
+</MultiColumn>
+
+#### Step 3: Take action with approved content
+
+<MultiColumn ratio="equal" gap="md">
+  <div slot="left">
+    Add the module for your desired action. In this example, we're publishing approved content to WordPress.
+
+    Map the **approved_content** field from the trigger to your action module. This ensures you're using the content after the human has reviewed and potentially edited it.
+
+    You can use any action here - send emails, update databases, post to social media, create support tickets, etc.
+
+  </div>
+
+  <div slot="right">
+    ![WordPress module with approved content](~/assets/images/extensions/human-in-the-loop/make/10-wordpress-action.png)
+  </div>
+</MultiColumn>
+
+#### Scenario 2 Overview
+
+Here's what the complete second scenario looks like:
+
+![Complete scenario 2 overview](~/assets/images/extensions/human-in-the-loop/make/11-scenario-2-overview.png)
+
+1. EnforcedFlow webhook triggers when a review is completed
+2. Filter checks if the review was approved
+3. WordPress creates a post with the approved content (only if approved)
+
+## Summary
+
+You now have a complete human-in-the-loop workflow in Make:
+
+- **Scenario 1** generates AI content and sends it for human review
+- **Scenario 2** receives the reviewed content and takes action based on approval status
+
+This pattern ensures that AI-generated content is always reviewed by a human before being published or sent to customers, maintaining quality and accountability in your automated workflows.
