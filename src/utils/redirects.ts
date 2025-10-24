@@ -13,8 +13,11 @@ export const REDIRECTS: Record<string, string> = {
   // Old "simple-actions" → New Zapier setup guides
   '/simple-actions/simple-round-robin': '/extensions/simple-round-robin/guides/zapier/setup',
 
-  // Old "how-to" → New blog posts (root level)
-  '/how-to/how-to-format-full-state-name-to-2-letter-code-in-zapier': '/format-state-name-to-2-letter-code-zapier',
+  // Old "how-to" → New blog posts (under /blog)
+  '/how-to/how-to-format-full-state-name-to-2-letter-code-in-zapier': '/blog/format-state-name-to-2-letter-code-zapier',
+
+  // Old root-level blog posts → New /blog structure
+  '/format-state-name-to-2-letter-code-zapier': '/blog/format-state-name-to-2-letter-code-zapier',
 
   // Policy pages
   '/terms-of-service': '/terms',
