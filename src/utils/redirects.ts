@@ -16,6 +16,9 @@ export const REDIRECTS: Record<string, string> = {
   // Old "actions" → New extension landing pages
   '/actions/simple-round-robin': '/extensions/simple-round-robin',
 
+  // Old "guides" → New extension guides structure
+  '/guides/zapier/human-in-the-loop': '/extensions/human-in-the-loop/guides/zapier/setup',
+
   // Old "how-to" → New blog posts (under /blog)
   '/how-to/how-to-format-full-state-name-to-2-letter-code-in-zapier': '/blog/format-state-name-to-2-letter-code-zapier',
 
